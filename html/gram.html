@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <script src="../js/bConverter.js" rel="script" type="application/javascript"></script>
+    <title>Convert gram to Cup, Spoon, Teaspoon</title>
+</head>
+<body>
+
+<h1>Convert gram to Cup, Spoon, Teaspoon</h1>
+<form name="measureForm" onsubmit="return false">
+    <select name="ingList" id="ingList"></select><br><br>
+    From<br><br>
+    <input type="number" id="measure"> <label for="measure" id="measureLabel">gram</label> <br><br>
+    To<br><br>
+    <select id="toList">
+        <option selected value="Cup">Cup</option>
+        <option value="Spoon">Spoon</option>
+        <option value="Teaspoon">Teaspoon</option>
+    </select><br><br>
+    <button type="submit" onclick="CN.calConvert()">Convert!</button>
+</form>
+
+<p id="result"></p>
+
+<script>
+    //CN.putDataInSelectList();
+    CN.getData("GramIng");
+</script>
+</body>
+</html>
