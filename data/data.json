@@ -75,6 +75,11 @@
       "iTeaspoon": 3
     }
   ],
-  "Packs": []
+  "temperature": [{
+    "iName":"Fahrenheit"
+  },
+    {
+      "iName":"Celsius"
+    }]
 }
 

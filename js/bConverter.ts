@@ -24,12 +24,15 @@ class CN {
     private static allIng; //initialize new array for ingredients
 
     static getData(className):void {
-        switch (className){
+        switch (className) {
             case "GramIng":
                 CN.allIng = new AllIng<GramIng>();
                 break;
             case "MlIng":
                 CN.allIng = new AllIng<MlIng>();
+                break;
+            case ("Temperature"):
+                CN.allIng = new AllIng<Temperature>();
                 break;
         }
         CN.ingRequest.abort();
@@ -48,6 +51,10 @@ class CN {
                     case ("MlIng"):
                         CN.allIng.pushIngredient(new MlIng(obResponse.ml[0].iName, obResponse.ml[0].iCup, obResponse.ml[0].iSpoon, obResponse.ml[0].iTeaspoon));
                         break;
+                    case ("Temperature"):
+                        for (let i:number = 0; i < obResponse.temperature.length; i++) { // put data in array
+                            CN.allIng.pushIngredient(new Temperature(obResponse.temperature[i].iName));
+                        }
                 }
                 CN.allIng.printIngArray();
                 CN.putDataInSelectList();// put ingredients names in the select list
@@ -83,7 +90,37 @@ class CN {
         } else {
             document.getElementById("result").innerHTML = measure + " " + measureName + " is " + CN.allIng.getIngredients()[ingNumber].convertResult(measure, tool) + " " + tool; // display result
         }
-    } // method to calculate convert result and show it to the user
+    } // method to calculate convert result and show it to the user - for gram and ml only
+    static tempConvert():void {
+        let degreeInput:HTMLInputElement = <HTMLInputElement>document.getElementById("measure");
+        let degree:number = parseInt(degreeInput.value); // get degree from user
+        let scaleSelect:HTMLSelectElement = <HTMLSelectElement>document.getElementById("ingList");
+        let scaleNumber:number = parseInt(scaleSelect.value); //get scale number from user
+        console.log("measure: " + degree);
+        let result = CN.allIng.getIngredients()[scaleNumber].convertResult(degree, null);
+        switch (CN.allIng.getIngredients()[scaleNumber].ingName()) {
+            case "Fahrenheit":
+                document.getElementById("result").innerHTML = degree + "&#176 Fahrenheit is " + result + "&#176 Celsius";
+                break;
+            case "Celsius":
+                document.getElementById("result").innerHTML = degree + "&#176 Celsius is " + result + "&#176 Fahrenheit";
+                break;
+        }
+    }// method to calculate convert result and show it to the user - for temperature only
+
+    static toggleCeFa():void {
+        let selected:HTMLSelectElement = <HTMLSelectElement>document.getElementById("ingList");
+        let selectedStr:string = selected.value;
+        switch (selectedStr) {
+            case "0":
+                document.getElementById("to").innerHTML = "Celsius";
+                break;
+            case "1":
+                document.getElementById("to").innerHTML = "Fahrenheit";
+                break;
+        }
+
+    }
 
 }// class for const variables and methods
 
@@ -91,7 +128,7 @@ class CN {
 interface Data {
     gram:DataIng[];
     ml:DataIng[];
-    pack:DataIng[];
+    temperature:DataIng[];
 }
 interface DataIng {
     iName:string;
@@ -189,7 +226,26 @@ class MlIng extends Ing {
     }
 } // class for gram convert ingredient
 
+class Temperature extends Ing {
+    constructor(iName:string) {
+        super(iName);
+    }
 
+    convertResult(degree:number, scale:string):number {
+        let result:number = 0;
+        switch (this.ingName()) {
+            case "Fahrenheit":
+                result = Math.round((degree - 32) / 1.8);
+                break;
+            case "Celsius":
+                result = Math.round((degree * 1.8) + 32);
+                break;
+        }
+        return result;
+    }
+
+
+}
 /*CN.pushIngredient(new GramIng("bf", 100, 1, 2));
  CN.printIngArray();*/
 //CN.getData();

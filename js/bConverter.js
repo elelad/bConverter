@@ -35,6 +35,9 @@ var CN = (function () {
             case "MlIng":
                 CN.allIng = new AllIng();
                 break;
+            case ("Temperature"):
+                CN.allIng = new AllIng();
+                break;
         }
         CN.ingRequest.abort();
         CN.ingRequest.open("GET", "../data/data.json", true);
@@ -52,6 +55,10 @@ var CN = (function () {
                     case ("MlIng"):
                         CN.allIng.pushIngredient(new MlIng(obResponse.ml[0].iName, obResponse.ml[0].iCup, obResponse.ml[0].iSpoon, obResponse.ml[0].iTeaspoon));
                         break;
+                    case ("Temperature"):
+                        for (var i = 0; i < obResponse.temperature.length; i++) {
+                            CN.allIng.pushIngredient(new Temperature(obResponse.temperature[i].iName));
+                        }
                 }
                 CN.allIng.printIngArray();
                 CN.putDataInSelectList(); // put ingredients names in the select list
@@ -85,7 +92,35 @@ var CN = (function () {
         else {
             document.getElementById("result").innerHTML = measure + " " + measureName + " is " + CN.allIng.getIngredients()[ingNumber].convertResult(measure, tool) + " " + tool; // display result
         }
-    }; // method to calculate convert result and show it to the user
+    }; // method to calculate convert result and show it to the user - for gram and ml only
+    CN.tempConvert = function () {
+        var degreeInput = document.getElementById("measure");
+        var degree = parseInt(degreeInput.value); // get degree from user
+        var scaleSelect = document.getElementById("ingList");
+        var scaleNumber = parseInt(scaleSelect.value); //get scale number from user
+        console.log("measure: " + degree);
+        var result = CN.allIng.getIngredients()[scaleNumber].convertResult(degree, null);
+        switch (CN.allIng.getIngredients()[scaleNumber].ingName()) {
+            case "Fahrenheit":
+                document.getElementById("result").innerHTML = degree + "&#176 Fahrenheit is " + result + "&#176 Celsius";
+                break;
+            case "Celsius":
+                document.getElementById("result").innerHTML = degree + "&#176 Celsius is " + result + "&#176 Fahrenheit";
+                break;
+        }
+    }; // method to calculate convert result and show it to the user - for temperature only
+    CN.toggleCeFa = function () {
+        var selected = document.getElementById("ingList");
+        var selectedStr = selected.value;
+        switch (selectedStr) {
+            case "0":
+                document.getElementById("to").innerHTML = "Celsius";
+                break;
+            case "1":
+                document.getElementById("to").innerHTML = "Fahrenheit";
+                break;
+        }
+    };
     CN.ingRequest = new XMLHttpRequest(); //xhr to get ingredient from server
     return CN;
 }()); // class for const variables and methods
@@ -171,6 +206,25 @@ var MlIng = (function (_super) {
     MlIng.className = "MlIng";
     return MlIng;
 }(Ing)); // class for gram convert ingredient
+var Temperature = (function (_super) {
+    __extends(Temperature, _super);
+    function Temperature(iName) {
+        _super.call(this, iName);
+    }
+    Temperature.prototype.convertResult = function (degree, scale) {
+        var result = 0;
+        switch (this.ingName()) {
+            case "Fahrenheit":
+                result = Math.round((degree - 32) / 1.8);
+                break;
+            case "Celsius":
+                result = Math.round((degree * 1.8) + 32);
+                break;
+        }
+        return result;
+    };
+    return Temperature;
+}(Ing));
 /*CN.pushIngredient(new GramIng("bf", 100, 1, 2));
  CN.printIngArray();*/
 //CN.getData();
