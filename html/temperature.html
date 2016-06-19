@@ -9,13 +9,13 @@
 <body>
 
 <h1>Convert Temperature Scale</h1>
-<form name="measureForm" onsubmit="return false">
+<form name="degreeForm" onsubmit="return false">
     From<br><br>
-    <input type="number" id="measure"><label for="measure" id="measureLabel">&#176 </label><select name="ingList" id="ingList" onchange="CN.toggleCeFa()"></select><br><br>
-    To <span id="to">Celsius</span>
+    <input type="number" id="degree"><label for="degree" id="measureLabel">&#176 </label>
+    <select name="ingList" id="ingList" onchange="Temperature.toggleCeFa()"></select><br><br>
+    To <span id="tTo">Celsius</span>
     <br><br>
-
-    <button type="submit" onclick="CN.tempConvert()">Convert!</button>
+    <button type="submit" onclick="Temperature.tempConvert()">Convert!</button>
 </form>
 
 <p id="result"></p>

@@ -1,0 +1,25 @@
+body{
+    line-height: 2em;
+    text-align: center;
+}
+
+
+.controlgroup-textinput{
+    padding:.22em;
+    /*padding-bottom:.22em;*/
+
+    box-shadow: none;
+    width: 80px;
+}
+
+.dollBtn{
+    font-weight: 100;
+}
+
+
+.measureIcon{
+    /*background-image: url("../src/cup.png");
+    background-size: 30px 30px;*/
+    width: 80px;
+    height: 80px;
+}

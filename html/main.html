@@ -2,18 +2,128 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <title>Baking Converter</title>
+    <script src="../lib/jquery-1.12.3.js" type="application/javascript"></script>
+    <script type="application/javascript" src="../lib/jquery.mobile-1.4.5/jquery.mobile-1.4.5.js"></script>
+    <link rel="stylesheet" href="../lib/jquery.mobile-1.4.5/jquery.mobile-1.4.5.css"/>
+    <link rel="stylesheet" href="../lib/jquery.mobile-1.4.5/jquery.mobile.icons-1.4.5.css"/>
+    <link rel="stylesheet" href="../lib/jquery.mobile-1.4.5/jquery.mobile.theme-1.4.5.css"/>
+    <script src="../js/bConverter.js" rel="script" type="application/javascript"></script>
+    <link rel="stylesheet" href="../css/bConverter.css" type="text/css"/>
 </head>
 <body>
-<h1>Baking Converter</h1>
-<p>
 
-</p>
+<div data-role="page" id="home" data-theme="a">
+    <div data-role="header">
+        <h1>Baking Converter</h1>
+        <p>
 
-<a href="gram.html" target="_self">gram</a>
-<a href="ml.html" target="_self">ml</a>
-<a href="temperature.html" target="_self">temperature</a>
+        </p>
+    </div>
+    <div data-role="content">
+        <a href="#gram" target="_self" class="ui-btn ui-btn-inline ui-btn-corner-all" onclick="CN.getData('GramIng')"><img src="../src/weight.png" class="measureIcon"><Br>weight</a>  <!---->
+        <a href="#ml" target="_self" class="ui-btn ui-btn-inline ui-btn-corner-all" onclick="CN.getData('MlIng')"><img src="../src/cup.png" class="measureIcon"><br>volume</a>
+        <a href="#temperature" target="_self" class="ui-btn ui-btn-inline ui-btn-corner-all"
+           onclick="CN.getData('Temperature')"><img src="../src/science-thermometer.png" class="measureIcon"><br>Temperature</a>
+    </div>
+</div>
 
+<div data-role="page" id="gram">
+    <div data-role="header">
+        <h1>Convert gram to Cup, Spoon, Teaspoon</h1>
+        <a href="#home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-btn-corner-all"></a>
+    </div>
+
+    <div data-role="content">
+
+        <div data-role="controlgroup" data-type="horizontal">
+            <button class="dollBtn" onclick="$(this).blur()">Convert</button>
+            `<select name="gIngList" id="gIngList" data-inline="true"
+                     data-wrapper-class="controlgroup-textinput ui-btn"></select>
+        </div>
+
+        <div data-role="controlgroup" data-type="horizontal">
+            <button class="dollBtn" onclick="$(this).blur()">From</button>
+            <label for="gMeasure" id="gMeasureLabel">gram</label>
+            <input type="number" id="gMeasure" placeholder="140" data-wrapper-class="controlgroup-textinput ui-btn" pattern="[0-9]">
+            <button class="dollBtn" onclick="$(this).blur()">gram</button>
+        </div>
+        <div data-role="controlgroup" data-type="horizontal">
+
+            <button class="dollBtn" onclick="$(this).blur()">To</button>
+            <select id="gToList" data-inline="true">
+                <option selected value="Cup">Cup</option>
+                <option value="Spoon">Spoon</option>
+                <option value="Teaspoon">Teaspoon</option>
+            </select><br><br>
+
+        </div>
+        <button type="submit" onclick="GramIng.gramResultToScreen()" class="ui-btn ui-btn-inline">Convert!</button>
+
+        <p id="gResult"></p>
+
+    </div>
+
+</div>
+
+<div data-role="page" id="ml">
+    <div data-role="header">
+        <h1>Convert ml to Cup, Spoon, Teaspoon</h1>
+        <a href="#home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-btn-corner-all"></a>
+    </div>
+    <div data-role="content">
+        <select name="mIngList" id="mIngList" style="display: none"></select><br><br>
+        <div data-role="controlgroup" data-type="horizontal">
+            <button class="dollBtn">From</button>
+            <input type="number" id="mMeasure" data-wrapper-class="controlgroup-textinput ui-btn" pattern="[0-9]">
+            <label for="mMeasure" id="mMeasureLabel">ml</label>
+            <button class="dollBtn">ml</button>
+        </div>
+        <div data-role="controlgroup" data-type="horizontal">
+            <button class="dollBtn">To</button>
+            <select id="mToList" data-wrapper-class="controlgroup-textinput ui-btn">
+                <option selected value="Cup">Cup</option>
+                <option value="Spoon">Spoon</option>
+                <option value="Teaspoon">Teaspoon</option>
+            </select>
+        </div>
+        <button type="submit" onclick="MlIng.mlResultToScreen()" class="ui-btn ui-btn-inline">Convert!</button>
+        <p id="mResult"></p>
+
+    </div>
+
+</div>
+
+<div data-role="page" id="temperature">
+    <div data-role="header">
+        <h1>Convert Temperature Scale</h1>
+        <a href="#home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-btn-corner-all"></a>
+    </div>
+
+    <div data-role="content">
+        <div data-role="controlgroup" data-type="horizontal">
+            <button class="dollBtn">From</button>
+            <input type="number" id="degree" data-wrapper-class="controlgroup-textinput ui-btn" pattern="[0-9]">
+            <label for="degree" id="degreeLabel">&#176 </label>
+            <button class="dollBtn">&#176</button>
+            <select name="ingList" id="tIngList" onchange="Temperature.toggleCeFa()" data-wrapper-class="controlgroup-textinput ui-btn"></select>
+        </div>
+        <div data-role="controlgroup" data-type="horizontal">
+            <button class="dollBtn">To <span id="tTo">Celsius</span></button>
+        </div>
+        <button type="submit" onclick="Temperature.tempConvert()" class="ui-btn ui-btn-inline">Convert!</button>
+        <p id="tResult"></p>
+
+        <!--        <script>
+                    //CN.putDataInSelectList();
+                    CN.getData("Temperature");
+                </script>-->
+
+
+    </div>
+
+</div>
 
 
 </body>

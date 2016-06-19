@@ -2,8 +2,12 @@
  * Created by Elad on 10/06/2016.
  */
 
+/// <reference path="../lib/jquery.d.ts" />
+
+
 //--------------Const Var's-----------------------------
 
+    
 class AllIng<T extends Ing> {
     private aIngredients:T[] = []; //array for all ingredients for a kind
     pushIngredient(ing:T):void {
@@ -18,18 +22,21 @@ class AllIng<T extends Ing> {
     getIngredients():T[] {
         return this.aIngredients;
     }
-}
+} //generic class for array for ingredient for all child's of Ing 
 class CN {
     private static ingRequest:XMLHttpRequest = new XMLHttpRequest(); //xhr to get ingredient from server
+    
     private static allIng; //initialize new array for ingredients
 
     static getData(className):void {
-        switch (className) {
-            case "GramIng":
+        switch (className) { 
+            case ("GramIng"):
                 CN.allIng = new AllIng<GramIng>();
                 break;
-            case "MlIng":
+            case ("MlIng"):
                 CN.allIng = new AllIng<MlIng>();
+                console.log("elad");
+                $("#mIngList").hide();
                 break;
             case ("Temperature"):
                 CN.allIng = new AllIng<Temperature>();
@@ -57,71 +64,41 @@ class CN {
                         }
                 }
                 CN.allIng.printIngArray();
-                CN.putDataInSelectList();// put ingredients names in the select list
+                CN.putDataInSelectList(className);// put ingredients names in the select list
             }
 
         };
         this.ingRequest.send(null);
-    } //method to get data from server and put it in the ingredients array
+    } //generic method to get data from server and put it in the ingredients array
 
-    static putDataInSelectList():void {
+    static getAllIng(){
+        return this.allIng;
+    } //get private allAll
+    
+    static putDataInSelectList(className:string):void {
+        var listId:string = "";
+        switch (className){
+            case "GramIng":
+                listId = "gIngList";
+                break;
+            case "MlIng":
+                listId = "mIngList";
+                break;
+            case "Temperature":
+                listId = "tIngList";
+                break;
+        }
+        var select:HTMLSelectElement = <HTMLSelectElement>document.getElementById(listId);
+        select.length = 0;
         for (let i:number = 0; i < CN.allIng.getIngredients().length; i++) {
             let opt = document.createElement("option"); //create option
             opt.value = i.toString(); // put value in option
             opt.text = CN.allIng.getIngredients()[i].ingName(); // put text in option
-            let select = document.getElementById("ingList");
             select.appendChild(opt); //put option in the list
         }
+        select.value = "0";
     } // method to put options in select ingredients html list
-
-    static calConvert():void {
-        let measureInput:HTMLInputElement = <HTMLInputElement>document.getElementById("measure");
-        let measure:number = parseInt(measureInput.value); // get grams from user
-        let measureName:string = document.getElementById("measureLabel").innerHTML; //get measure label (garm or ml)
-        console.log(measureName);
-        let toolSelect:HTMLSelectElement = <HTMLSelectElement>document.getElementById("toList");
-        let tool:string = toolSelect.value; //get tool from user
-        let ingSelect:HTMLSelectElement = <HTMLSelectElement>document.getElementById("ingList");
-        let ingNumber:number = parseInt(ingSelect.value); //get ingredient from user
-        console.log("measure: " + measure + " tool:" + tool);
-        let result = CN.allIng.getIngredients()[ingNumber].convertResult(measure, tool);
-        if (result < 0) { //check if there is data
-            document.getElementById("result").innerHTML = "are you nuts?? " + measure + " " + measureName + " of " + CN.allIng.getIngredients()[ingNumber].ingName() + "??";
-        } else {
-            document.getElementById("result").innerHTML = measure + " " + measureName + " is " + CN.allIng.getIngredients()[ingNumber].convertResult(measure, tool) + " " + tool; // display result
-        }
-    } // method to calculate convert result and show it to the user - for gram and ml only
-    static tempConvert():void {
-        let degreeInput:HTMLInputElement = <HTMLInputElement>document.getElementById("measure");
-        let degree:number = parseInt(degreeInput.value); // get degree from user
-        let scaleSelect:HTMLSelectElement = <HTMLSelectElement>document.getElementById("ingList");
-        let scaleNumber:number = parseInt(scaleSelect.value); //get scale number from user
-        console.log("measure: " + degree);
-        let result = CN.allIng.getIngredients()[scaleNumber].convertResult(degree, null);
-        switch (CN.allIng.getIngredients()[scaleNumber].ingName()) {
-            case "Fahrenheit":
-                document.getElementById("result").innerHTML = degree + "&#176 Fahrenheit is " + result + "&#176 Celsius";
-                break;
-            case "Celsius":
-                document.getElementById("result").innerHTML = degree + "&#176 Celsius is " + result + "&#176 Fahrenheit";
-                break;
-        }
-    }// method to calculate convert result and show it to the user - for temperature only
-
-    static toggleCeFa():void {
-        let selected:HTMLSelectElement = <HTMLSelectElement>document.getElementById("ingList");
-        let selectedStr:string = selected.value;
-        switch (selectedStr) {
-            case "0":
-                document.getElementById("to").innerHTML = "Celsius";
-                break;
-            case "1":
-                document.getElementById("to").innerHTML = "Fahrenheit";
-                break;
-        }
-
-    }
-
+    
 }// class for const variables and methods
 
 //-----------interface for JSON parsing-------------------
@@ -136,6 +113,7 @@ interface DataIng {
     iSpoon:number;
     iTeaspoon:number;
 }
+
 
 
 //------------Classes-----------------------------------
@@ -188,7 +166,25 @@ class GramIng extends Ing {
                 break;
         }
         return (result > 0) ? Math.round((result) * 10) / 10 : -1; //if no data to convert return -1
-    }
+    }//convert and get result in number
+
+    static gramResultToScreen():void {
+        let measureInput:HTMLInputElement = <HTMLInputElement>document.getElementById("gMeasure");
+        let measure:number = parseInt(measureInput.value); // get grams from user
+        let measureName:string = document.getElementById("gMeasureLabel").innerHTML; //get measure label (garm or ml)
+        console.log(measureName);
+        let toolSelect:HTMLSelectElement = <HTMLSelectElement>document.getElementById("gToList");
+        let tool:string = toolSelect.value; //get tool from user
+        let ingSelect:HTMLSelectElement = <HTMLSelectElement>document.getElementById("gIngList");
+        let ingNumber:number = parseInt(ingSelect.value); //get ingredient from user
+        console.log("measure: " + measure + " tool:" + tool);
+        let result = CN.getAllIng().getIngredients()[ingNumber].convertResult(measure, tool);
+        if (result < 0) { //check if there is data
+            document.getElementById("gResult").innerHTML = "are you nuts?? " + measure + " " + measureName + " of " + CN.getAllIng().getIngredients()[ingNumber].ingName() + "??";
+        } else {
+            document.getElementById("gResult").innerHTML = measure + " " + measureName + " is " + CN.getAllIng().getIngredients()[ingNumber].convertResult(measure, tool) + " " + tool; // display result
+        }
+    } // method to calculate convert result and show it to the user - for gram only
 } // class for gram convert ingredient
 
 class MlIng extends Ing {
@@ -224,13 +220,31 @@ class MlIng extends Ing {
         }
         return (result > 0) ? Math.round((result) * 10) / 10 : -1; //if no data to convert return -1
     }
+
+    static mlResultToScreen():void {
+        let measureInput:HTMLInputElement = <HTMLInputElement>document.getElementById("mMeasure");
+        let measure:number = parseInt(measureInput.value); // get grams from user
+        let measureName:string = document.getElementById("mMeasureLabel").innerHTML; //get measure label (garm or ml)
+        console.log(measureName);
+        let toolSelect:HTMLSelectElement = <HTMLSelectElement>document.getElementById("mToList");
+        let tool:string = toolSelect.value; //get tool from user
+        let ingSelect:HTMLSelectElement = <HTMLSelectElement>document.getElementById("mIngList");
+        let ingNumber:number = parseInt(ingSelect.value); //get ingredient from user
+        console.log("measure: " + measure + " tool:" + tool);
+        let result = CN.getAllIng().getIngredients()[ingNumber].convertResult(measure, tool);
+        if (result < 0) { //check if there is data
+            document.getElementById("mResult").innerHTML = "are you nuts?? " + measure + " " + measureName + " of " + CN.getAllIng().getIngredients()[ingNumber].ingName() + "??";
+        } else {
+            document.getElementById("mResult").innerHTML = measure + " " + measureName + " is " + CN.getAllIng().getIngredients()[ingNumber].convertResult(measure, tool) + " " + tool; // display result
+        }
+    } // method to calculate convert result and show it to the user - for ml only
 } // class for gram convert ingredient
 
 class Temperature extends Ing {
     constructor(iName:string) {
         super(iName);
     }
-
+    //@Override
     convertResult(degree:number, scale:string):number {
         let result:number = 0;
         switch (this.ingName()) {
@@ -243,9 +257,43 @@ class Temperature extends Ing {
         }
         return result;
     }
+    
+    static tempConvert():void {
+        let degreeInput:HTMLInputElement = <HTMLInputElement>document.getElementById("degree");
+        let degree:number = parseInt(degreeInput.value); // get degree from user
+        let scaleSelect:HTMLSelectElement = <HTMLSelectElement>document.getElementById("tIngList");
+        let scaleNumber:number = parseInt(scaleSelect.value); //get scale number from user
+        console.log("degree: " + degree);
+        let result = CN.getAllIng().getIngredients()[scaleNumber].convertResult(degree, null);
+        switch (CN.getAllIng().getIngredients()[scaleNumber].ingName()) {
+            case "Fahrenheit":
+                document.getElementById("tResult").innerHTML = degree + "&#176 Fahrenheit is " + result + "&#176 Celsius";
+                break;
+            case "Celsius":
+                document.getElementById("tResult").innerHTML = degree + "&#176 Celsius is " + result + "&#176 Fahrenheit";
+                break;
+        }
+    }// method to calculate convert result and show it to the user - for temperature only
+
+    static toggleCeFa():void {
+        let selected:HTMLSelectElement = <HTMLSelectElement>document.getElementById("tIngList");
+        let selectedStr:string = selected.value;
+        switch (selectedStr) {
+            case "0":
+                document.getElementById("tTo").innerHTML = "Celsius";
+                break;
+            case "1":
+                document.getElementById("tTo").innerHTML = "Fahrenheit";
+                break;
+        }
+
+    }
+    
+}//class for all Temperature related methods
 
 
-}
+
+
 /*CN.pushIngredient(new GramIng("bf", 100, 1, 2));
  CN.printIngArray();*/
 //CN.getData();
@@ -253,3 +301,20 @@ class Temperature extends Ing {
 
 //------------------------------------------------------
 
+/*static calConvert():void {
+ let measureInput:HTMLInputElement = <HTMLInputElement>document.getElementById("measure");
+ let measure:number = parseInt(measureInput.value); // get grams from user
+ let measureName:string = document.getElementById("measureLabel").innerHTML; //get measure label (garm or ml)
+ console.log(measureName);
+ let toolSelect:HTMLSelectElement = <HTMLSelectElement>document.getElementById("toList");
+ let tool:string = toolSelect.value; //get tool from user
+ let ingSelect:HTMLSelectElement = <HTMLSelectElement>document.getElementById("ingList");
+ let ingNumber:number = parseInt(ingSelect.value); //get ingredient from user
+ console.log("measure: " + measure + " tool:" + tool);
+ let result = CN.allIng.getIngredients()[ingNumber].convertResult(measure, tool);
+ if (result < 0) { //check if there is data
+ document.getElementById("result").innerHTML = "are you nuts?? " + measure + " " + measureName + " of " + CN.allIng.getIngredients()[ingNumber].ingName() + "??";
+ } else {
+ document.getElementById("result").innerHTML = measure + " " + measureName + " is " + CN.allIng.getIngredients()[ingNumber].convertResult(measure, tool) + " " + tool; // display result
+ }
+ } // method to calculate convert result and show it to the user - for gram and ml only*/
