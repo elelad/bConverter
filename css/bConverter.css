@@ -2,12 +2,40 @@ body{
     line-height: 2em;
     text-align: center;
 }
+.ui-page .ui-header{
+    background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+    border: none;
+    /*color: white;*/
+    text-shadow: none;
+}
+.ui-page {
+    /*background: rgba(0,0,255,0.05);*/
+    background-image: url("../src/handsCover.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    /*background-color: #B3E5FC;*/
+}
 
+
+#home a{
+    background: rgba(255,255,255,0.7);
+    border: none;
+}
+
+/*#gram.ui-page{
+    background-image: url("../src/flourCover.png");
+    background-size: cover;
+}*/
+
+.ui-content{
+    background: transparent;
+}
 
 .controlgroup-textinput{
     padding:.22em;
     /*padding-bottom:.22em;*/
-
     box-shadow: none;
     width: 80px;
 }
@@ -22,4 +50,31 @@ body{
     background-size: 30px 30px;*/
     width: 80px;
     height: 80px;
+}
+
+#mIngList{
+    display: none;
+}
+
+.inputError{
+    background-color: rgba(255,0,0,0.9);
+    border-color: rgba(255,0,0,0.9);
+}
+.inputError::after{
+    background-color: transparent;
+    border-color: rgba(255,0,0,0.9);
+}
+
+#mIngList:before, #mIngList:after{
+    display: none;
+}
+
+.result{
+    background: rgba(255,255,255,0.5);   /*linear-gradient(#03A9F4, #4FC3F7);*/
+    box-shadow: 4px 4px 6px rgba(0,0,0,0.8);
+    border-radius: 5px;
+    padding: 20px;
+    display: inline-block;
+    font-size: 1.5em;
+    /*color: white;*/
 }

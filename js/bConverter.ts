@@ -1,12 +1,9 @@
-/**
- * Created by Elad on 10/06/2016.
- */
-
 /// <reference path="../lib/jquery.d.ts" />
 
 
 //--------------Const Var's-----------------------------
 
+window.addEventListener("load", function() { window. scrollTo(0, 0); });
     
 class AllIng<T extends Ing> {
     private aIngredients:T[] = []; //array for all ingredients for a kind
@@ -36,7 +33,6 @@ class CN {
             case ("MlIng"):
                 CN.allIng = new AllIng<MlIng>();
                 console.log("elad");
-                $("#mIngList").hide();
                 break;
             case ("Temperature"):
                 CN.allIng = new AllIng<Temperature>();
@@ -94,12 +90,55 @@ class CN {
             let opt = document.createElement("option"); //create option
             opt.value = i.toString(); // put value in option
             opt.text = CN.allIng.getIngredients()[i].ingName(); // put text in option
+            if (i==0){
+                opt.setAttribute("selected", "selected");
+            }
             select.appendChild(opt); //put option in the list
         }
         select.value = "0";
+
     } // method to put options in select ingredients html list
+
+    static validateInputNum(element:HTMLInputElement):boolean{
+        var measure:number = parseInt(element.value);
+        var rgx:RegExp = /\d/;
+        console.log("is:" + rgx.test(measure.toString()));
+        var eId:string = element.id[0];
+        console.log("id[0]:" + eId);
+        if (rgx.test(measure.toString()) && measure != 0){
+            switch (eId){
+                case "g":
+                    GramIng.gramResultToScreen();
+                    break;
+                case "m":
+                    MlIng.mlResultToScreen();
+                    break;
+                case "t":
+                    Temperature.temperatureResultToScreen();
+                    break;
+            }
+            return true;
+        }else {
+            console.log("pls enter a number");
+            var a =  element.parentElement;//document.getElementById("gMeasure").parentElement;
+            //a.style.border = "solid";
+            //a.style.borderColor =  "red"; //"rgba(255,0,0,0.4)";
+            var currentBackground:string = a.style.backgroundColor;
+            a.style.backgroundColor = "rgba(255,0,0,0.7)";
+            element.addEventListener("focus", function () {
+                a.style.background = currentBackground;
+            });
+            //$(a).addClass("inputError").hide().show();
+            return false;
+        }
+    }
+
+
     
 }// class for const variables and methods
+
+
+
 
 //-----------interface for JSON parsing-------------------
 interface Data {
@@ -171,19 +210,23 @@ class GramIng extends Ing {
     static gramResultToScreen():void {
         let measureInput:HTMLInputElement = <HTMLInputElement>document.getElementById("gMeasure");
         let measure:number = parseInt(measureInput.value); // get grams from user
-        let measureName:string = document.getElementById("gMeasureLabel").innerHTML; //get measure label (garm or ml)
-        console.log(measureName);
-        let toolSelect:HTMLSelectElement = <HTMLSelectElement>document.getElementById("gToList");
-        let tool:string = toolSelect.value; //get tool from user
-        let ingSelect:HTMLSelectElement = <HTMLSelectElement>document.getElementById("gIngList");
-        let ingNumber:number = parseInt(ingSelect.value); //get ingredient from user
-        console.log("measure: " + measure + " tool:" + tool);
-        let result = CN.getAllIng().getIngredients()[ingNumber].convertResult(measure, tool);
-        if (result < 0) { //check if there is data
-            document.getElementById("gResult").innerHTML = "are you nuts?? " + measure + " " + measureName + " of " + CN.getAllIng().getIngredients()[ingNumber].ingName() + "??";
-        } else {
-            document.getElementById("gResult").innerHTML = measure + " " + measureName + " is " + CN.getAllIng().getIngredients()[ingNumber].convertResult(measure, tool) + " " + tool; // display result
-        }
+        //if (CN.validateInputNumber(measure)){ //if user put valid number
+            let measureName:string = document.getElementById("gMeasureLabel").innerHTML; //get measure label (garm or ml)
+            console.log(measureName);
+            let toolSelect:HTMLSelectElement = <HTMLSelectElement>document.getElementById("gToList");
+            let tool:string = toolSelect.value; //get tool from user
+            let ingSelect:HTMLSelectElement = <HTMLSelectElement>document.getElementById("gIngList");
+            let ingNumber:number = parseInt(ingSelect.value); //get ingredient from user
+            console.log("measure: " + measure + " tool:" + tool);
+            let result = CN.getAllIng().getIngredients()[ingNumber].convertResult(measure, tool);
+            if (result < 0) { //check if there is data
+                document.getElementById("gResult").innerHTML = "are you nuts?? " + measure + " " + measureName + " of " + CN.getAllIng().getIngredients()[ingNumber].ingName() + "??";
+            } else {
+                document.getElementById("gResult").innerHTML = measure + " " + measureName + " is " + CN.getAllIng().getIngredients()[ingNumber].convertResult(measure, tool) + " " + tool; // display result
+            }
+        document.getElementById("gResult").className = "result";
+        //}
+
     } // method to calculate convert result and show it to the user - for gram only
 } // class for gram convert ingredient
 
@@ -237,6 +280,7 @@ class MlIng extends Ing {
         } else {
             document.getElementById("mResult").innerHTML = measure + " " + measureName + " is " + CN.getAllIng().getIngredients()[ingNumber].convertResult(measure, tool) + " " + tool; // display result
         }
+        document.getElementById("mResult").className = "result";
     } // method to calculate convert result and show it to the user - for ml only
 } // class for gram convert ingredient
 
@@ -258,8 +302,8 @@ class Temperature extends Ing {
         return result;
     }
     
-    static tempConvert():void {
-        let degreeInput:HTMLInputElement = <HTMLInputElement>document.getElementById("degree");
+    static temperatureResultToScreen():void {
+        let degreeInput:HTMLInputElement = <HTMLInputElement>document.getElementById("tDegree");
         let degree:number = parseInt(degreeInput.value); // get degree from user
         let scaleSelect:HTMLSelectElement = <HTMLSelectElement>document.getElementById("tIngList");
         let scaleNumber:number = parseInt(scaleSelect.value); //get scale number from user
@@ -273,6 +317,7 @@ class Temperature extends Ing {
                 document.getElementById("tResult").innerHTML = degree + "&#176 Celsius is " + result + "&#176 Fahrenheit";
                 break;
         }
+        document.getElementById("tResult").className = "result";
     }// method to calculate convert result and show it to the user - for temperature only
 
     static toggleCeFa():void {
@@ -318,3 +363,22 @@ class Temperature extends Ing {
  document.getElementById("result").innerHTML = measure + " " + measureName + " is " + CN.allIng.getIngredients()[ingNumber].convertResult(measure, tool) + " " + tool; // display result
  }
  } // method to calculate convert result and show it to the user - for gram and ml only*/
+
+/*static validateInputNumber(measure:number):boolean{
+ var rgx:RegExp = /\d/;
+ console.log("is:" + rgx.test(measure.toString()));
+ if (rgx.test(measure.toString())){
+ return true;
+ }else {
+ console.log("pls enter a number");
+ var a = document.getElementById("gMeasure").parentElement;
+ //a.style.border = "solid";
+ //a.style.borderColor =  "red"; //"rgba(255,0,0,0.4)";
+ a.style.backgroundColor = "rgba(255,0,0,0.2)";
+ a.addEventListener("focus", function () {
+ a.style.background = "transparent";
+ });
+ //$(a).addClass("inputError").hide().show();
+ return false;
+ }
+ }*/
