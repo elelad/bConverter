@@ -16,7 +16,7 @@
 </head>
 <body>
 
-<div data-role="page" id="home">
+<div data-role="page" id="home" data-dom-cache="false">
     <div data-role="header" class="ui-header">
         <h1>Baking Converter</h1>
         <p></p>
@@ -31,7 +31,7 @@
     </div>
 </div>
 
-<div data-role="page" id="gram">
+<div data-role="page" id="gram" data-dom-cache="false">
     <div data-role="header">
         <h1>Convert gram to Cup, Spoon, Teaspoon</h1>
         <a href="#home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-btn-corner-all"></a>
@@ -42,7 +42,9 @@
         <div data-role="controlgroup" data-type="horizontal">
             <button class="dollBtn" onclick="$(this).blur()">Convert</button>
             `<select name="gIngList" id="gIngList" data-inline="true"
-                     data-wrapper-class="controlgroup-textinput ui-btn"></select>
+                     data-wrapper-class="controlgroup-textinput ui-btn">
+            <option value="" disabled selected>Select your option</option>
+        </select>
         </div>
 
         <div data-role="controlgroup" data-type="horizontal">
@@ -62,7 +64,8 @@
             </select><br><br>
 
         </div>
-        <button type="submit" onclick="CN.validateInputNum(document.getElementById('gMeasure'))" class="ui-btn ui-btn-inline  ui-btn-corner-all ui-overlay-shadow">
+        <button type="submit" onclick="CN.validateInputNum(document.getElementById('gMeasure'))"
+                class="ui-btn ui-btn-inline  ui-btn-corner-all ui-overlay-shadow">
             Convert!
         </button>  <!--GramIng.gramResultToScreen()-->
         <br>
@@ -72,7 +75,7 @@
 
 </div>
 
-<div data-role="page" id="ml">
+<div data-role="page" id="ml" data-dom-cache="false">
     <div data-role="header">
         <h1>Convert ml to Cup, Spoon, Teaspoon</h1>
         <a href="#home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-btn-corner-all"></a>
@@ -105,7 +108,7 @@
 
 </div>
 
-<div data-role="page" id="temperature">
+<div data-role="page" id="temperature" data-dom-cache="false">
     <div data-role="header">
         <h1>Convert Temperature Scale</h1>
         <a href="#home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-btn-corner-all"></a>
@@ -123,7 +126,8 @@
         <div data-role="controlgroup" data-type="horizontal">
             <button class="dollBtn">To <span id="tTo">Celsius</span></button>
         </div>
-        <button type="submit" onclick="CN.validateInputNum(document.getElementById('tDegree'))" class="ui-btn ui-btn-inline ui-btn-corner-all ui-overlay-shadow">
+        <button type="submit" onclick="CN.validateInputNum(document.getElementById('tDegree'))"
+                class="ui-btn ui-btn-inline ui-btn-corner-all ui-overlay-shadow">
             Convert!
         </button> <!--Temperature.temperatureResultToScreen()-->
         <br>
@@ -139,6 +143,10 @@
 
 </div>
 
-
+<!--<script>
+    $("body").ready(function () {
+        $("body").pagecontainer('change', 'main.html');
+    });
+</script>-->
 </body>
 </html>

@@ -91,11 +91,11 @@ class CN {
             opt.value = i.toString(); // put value in option
             opt.text = CN.allIng.getIngredients()[i].ingName(); // put text in option
             if (i==0){
-                opt.setAttribute("selected", "selected");
+                opt.setAttribute("selected", "true");
             }
             select.appendChild(opt); //put option in the list
         }
-        select.value = "0";
+        //select.value = "0";
 
     } // method to put options in select ingredients html list
 
@@ -136,8 +136,6 @@ class CN {
 
     
 }// class for const variables and methods
-
-
 
 
 //-----------interface for JSON parsing-------------------
