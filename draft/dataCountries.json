@@ -1,0 +1,22 @@
+[
+  {
+    "countries" : ["IL"],
+    "fileName" : "dataIL.json"
+  },
+  {
+    "countries" : ["US"],
+    "fileName" : "dataUS.json"
+  },
+  {
+    "countries" : ["AU"],
+    "fileName" : "dataAU.json"
+  },
+  {
+    "countries" : ["CA"],
+    "fileName" : "dataCA.json"
+  },
+  {
+    "countries" : ["default"],
+    "fileName" : "data.json"
+  }
+]

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="shortcut icon" sizes="196x196" href="../src/bConverterLogo.png">
+    <title>Baking Converter</title>
+    <script src="../lib/jquery-1.12.3.js" type="application/javascript"></script>
+    <script src="../js/bConverter.new.js" rel="script" type="application/javascript"></script>
+    <script type="application/javascript" src="../lib/jquery.mobile-1.4.5/jquery.mobile-1.4.5.js"></script>
+    <link rel="stylesheet" href="../lib/jquery.mobile-1.4.5/jquery.mobile-1.4.5.css"/>
+    <link rel="stylesheet" href="../lib/jquery.mobile-1.4.5/jquery.mobile.icons-1.4.5.css"/>
+    <link rel="stylesheet" href="../lib/jquery.mobile-1.4.5/jquery.mobile.theme-1.4.5.css"/>
+    <link rel="stylesheet" href="../css/bConverter.css" type="text/css"/>
+</head>
+<body>
+
+
+<div id="loading" data-role="popup" data-theme="b" data-dismissible="false">
+    <div>
+        <!--<h3>Baking Converter</h3>-->
+        <img src="../src/ajax-loader.gif"/>
+        <div>Loading Data...</div>
+    </div>
+</div>
+
+
+<!--________home page___________________-->
+<div data-role="page" id="home" data-dom-cache="true">
+    <div data-role="header">
+        <h1>Baking Converter</h1>
+        <p></p>
+        <div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
+            <a id="#pSystemMeasureBtn" class="ui-btn dollBtn pSystemMeasureBtn"></a>
+            <a id="#pSettingBtn" onclick="CN.goToSetting()" class="ui-btn ui-icon-gear ui-btn-icon-notext
+            ui-nodisc-icon ui-btn-b">setting</a>
+        </div>
+    </div>
+    <div data-role="content">
+        <br>
+        <a href="#" target="_self" class="ui-btn ui-btn-inline ui-btn-corner-all navBtn"
+           onclick="CN.dataToArray('WeightIng')"><img src="../src/weight.png" class="measureIcon"><Br>Weight</a>
+        <!---->
+        <a href="#" target="_self" class="ui-btn ui-btn-inline ui-btn-corner-all navBtn"
+           onclick="CN.dataToArray('VolumeIng')"><img
+                src="../src/cup-scale.png" class="measureIcon"><br>Volume</a>
+        <a href="#" target="_self" class="ui-btn ui-btn-inline ui-btn-corner-all navBtn"
+           onclick="CN.dataToArray('Temperature')"><img src="../src/temperature-measure.png" class="measureIcon"><br>Temperature</a><br>
+        <div id="popupPos"></div>
+
+        <div id="credit">
+            <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a
+                    href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a
+                    href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC
+                3.0 BY</a></div>
+        </div>
+    </div>
+
+
+    <!--________popups___________________-->
+    <div id="locationPopup" data-role="popup" data-theme="b" data-dismissible="false">
+        <div data-role="header" data-theme="a">
+            <h1>Location</h1>
+        </div>
+        <div data-role="content" class="ui-content" >
+            <h3>Set Measure system based on your location?</h3>
+            <a id="locationYesBtn" class="ui-btn ui-icon-check ui-btn-icon-left ui-btn-corner-all ui-btn-a ui-btn-inline ">Yes</a>
+            <a id="locationNoBtn" class="ui-btn ui-icon-delete ui-btn-icon-right ui-btn-corner-all ui-btn-a ui-btn-inline ">No</a>
+        </div>
+    </div>
+
+
+</div>
+
+<!--________weight page___________________-->
+<div data-role="page" id="pWeight" data-dom-cache="true">
+    <div data-role="header">
+        <h1>Weight</h1>
+        <a href="#home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-btn-corner-all ui-nodisc-icon ui-btn-b"></a>
+        <div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
+            <a class="ui-btn dollBtn pSystemMeasureBtn"></a>
+            <a onclick="CN.goToSetting()" class="ui-btn ui-icon-gear ui-btn-icon-notext
+            ui-nodisc-icon ui-btn-b">setting</a>
+        </div>
+    </div>
+
+    <div data-role="content">
+        <h2>Convert gram to Cup, Spoon, Teaspoon</h2>
+        <!-- -------Ingredient----------- -->
+        <div data-role="controlgroup" data-type="horizontal">
+            <button class="dollBtn" onclick="$(this).blur()">Convert</button>
+            `<select name="gIngList" id="gIngList" data-inline="true"
+                     data-wrapper-class="controlgroup-textinput ui-btn">
+            <option value="" disabled selected>Select your option</option>
+        </select>
+        </div>
+        <!-- -------From----------- -->
+        <div data-role="controlgroup" data-type="horizontal">
+            <button class="dollBtn" onclick="$(this).blur()">From</button>
+            <label for="gMeasure" id="gMeasureLabel">gram</label>
+            <input type="number" id="gMeasure" placeholder="" data-wrapper-class="controlgroup-textinput ui-btn"
+                   pattern="[0-9]">
+            <button class="dollBtn" onclick="$(this).blur()">gram</button>
+        </div>
+        <!-- -------To----------- -->
+        <div data-role="controlgroup" data-type="horizontal">
+            <button class="dollBtn" onclick="$(this).blur()">To</button>
+            <select id="gToList" data-inline="true">
+                <option selected value="Cup">Cup</option>
+                <option value="Spoon">Spoon</option>
+                <option value="Teaspoon">Teaspoon</option>
+            </select><br><br>
+        </div>
+        <!-- -------Submit----------- -->
+        <button type="submit" onclick="CN.validateInputNum(document.getElementById('gMeasure'))"
+                class="ui-btn ui-btn-inline ui-btn-corner-all ui-overlay-shadow resultBtn">
+            Convert!
+        </button>  <!--WeightIng.gramResultToScreen()-->
+        <br>
+        <!-- -------Result----------- -->
+        <p id="gResult" class="result"></p>
+    </div>
+</div>
+
+<!--________volume page___________________-->
+<div data-role="page" id="pVolume" data-dom-cache="true">
+    <div data-role="header">
+        <h1>Volume</h1>
+        <a href="#home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-btn-corner-all  ui-nodisc-icon ui-btn-b"></a>
+        <div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
+            <a class="ui-btn dollBtn pSystemMeasureBtn"></a>
+            <a onclick="CN.goToSetting()" class="ui-btn ui-icon-gear ui-btn-icon-notext
+            ui-nodisc-icon ui-btn-b">setting</a>
+        </div>
+    </div>
+    <div data-role="content">
+        <h2>Convert ml to Cup, Spoon, Teaspoon</h2>
+        <div class="ui-screen-hidden">
+            <select name="mIngList" id="mIngList"></select>
+        </div>
+        <!-- -------From----------- -->
+        <div data-role="controlgroup" data-type="horizontal">
+            <button class="dollBtn">From</button>
+            <input type="number" id="mMeasure" data-wrapper-class="controlgroup-textinput ui-btn" pattern="[0-9]">
+            <label for="mMeasure" id="mMeasureLabel">ml</label>
+            <button class="dollBtn">ml</button>
+        </div>
+        <!-- -------To----------- -->
+        <div data-role="controlgroup" data-type="horizontal">
+            <button class="dollBtn">To</button>
+            <select id="mToList" data-wrapper-class="controlgroup-textinput ui-btn">
+                <option selected value="Cup">Cup</option>
+                <option value="Spoon">Spoon</option>
+                <option value="Teaspoon">Teaspoon</option>
+            </select>
+        </div>
+        <!-- -------Submit----------- -->
+        <button type="submit" onclick="CN.validateInputNum(document.getElementById('mMeasure'))"
+                class="ui-btn ui-btn-inline ui-btn-corner-all ui-overlay-shadow" tabindex="1">Convert!
+        </button> <!--VolumeIng.mlResultToScreen()-->
+        <br>
+        <!-- -------Result----------- -->
+        <p id="mResult" class="result"></p>
+
+    </div>
+</div>
+
+<!--________temperature page___________________-->
+<div data-role="page" id="pTemperature" data-dom-cache="true">
+    <div data-role="header">
+        <h1>Temperature</h1>
+        <a href="#home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-btn-corner-all  ui-nodisc-icon ui-btn-b"></a>
+        <div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
+            <a class="ui-btn dollBtn pSystemMeasureBtn"></a>
+            <a onclick="CN.goToSetting()" class="ui-btn ui-icon-gear ui-btn-icon-notext
+            ui-nodisc-icon ui-btn-b">setting</a>
+        </div>
+    </div>
+    <div data-role="content">
+        <h2>Convert Temperature Scale</h2>
+        <!-- -------From----------- -->
+        <div data-role="controlgroup" data-type="horizontal">
+            <button class="dollBtn">From</button>
+            <input type="number" id="tDegree" data-wrapper-class="controlgroup-textinput ui-btn" pattern="[0-9]">
+            <label for="tDegree" id="degreeLabel">&#176 </label>
+            <button class="dollBtn">&#176</button>
+            <select name="ingList" id="tIngList" onchange="Temperature.toggleCeFa()"
+                    data-wrapper-class="controlgroup-textinput ui-btn"></select>
+        </div>
+        <!-- -------To----------- -->
+        <div data-role="controlgroup" data-type="horizontal">
+            <button class="dollBtn">To <span id="tTo">Celsius</span></button>
+        </div>
+        <!-- -------Submit----------- -->
+        <button type="submit" onclick="CN.validateInputNum(document.getElementById('tDegree'))"
+                class="ui-btn ui-btn-inline ui-btn-corner-all ui-overlay-shadow">
+            Convert!
+        </button> <!--Temperature.temperatureResultToScreen()-->
+        <br>
+        <!-- -------Result----------- -->
+        <p id="tResult" class="result"></p>
+    </div>
+
+</div>
+
+<!--________setting page___________________-->
+<div data-role="page" id="pSetting" data-dom-cache="false">
+    <div data-role="header">
+        <h1>Setting</h1>
+        <a href="#home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-btn-corner-all ui-nodisc-icon ui-btn-b"></a>
+        <div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
+            <a class="ui-btn dollBtn pSystemMeasureBtn"></a>
+            <a onclick="CN.goToSetting()" class="ui-btn ui-icon-gear ui-btn-icon-notext
+            ui-nodisc-icon ui-btn-b">setting</a>
+        </div>
+    </div>
+
+    <div data-role="content">
+        <h2>Measure System</h2>
+        <a onclick="CN.getCountry()" class="ui-btn ui-icon-location ui-btn-icon-left ui-btn-b ui-nodisc-icon
+            ui-btn-corner-all ui-btn-inline">Get From Location</a>
+        <fieldset data-role="controlgroup" data-type="horizontal" id="systemFildset">
+            <input type="radio" value="US" name="mSystem" id="rUS"/><label for="rUS">US</label>
+            <input type="radio" value="IL" name="mSystem" id="rIL"/><label for="rIL">IL</label>
+            <input type="radio" value="CA" name="mSystem" id="rCA"/><label for="rCA">CA</label>
+            <input type="radio" value="AU" name="mSystem" id="rAU"/><label for="rAU">AU</label>
+            <input type="radio" value="UK" name="mSystem" id="rUK"/><label for="rUK">UK</label>
+        </fieldset>
+
+        <h3 id="settingMeasure"></h3>
+
+    </div>
+
+</div>
+
+
+
+
+
+</body>
+</html>
