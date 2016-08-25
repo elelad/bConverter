@@ -3,7 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="a5b15d88-40a4-4e6e-a2b2-4e6b22147f11" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/bConverter.css" afterPath="$PROJECT_DIR$/css/bConverter.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/dataAU.json" afterPath="$PROJECT_DIR$/data/dataAU.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/dataCA.json" afterPath="$PROJECT_DIR$/data/dataCA.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/dataIL.json" afterPath="$PROJECT_DIR$/data/dataIL.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/dataUK.json" afterPath="$PROJECT_DIR$/data/dataUK.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/dataUS.json" afterPath="$PROJECT_DIR$/data/dataUS.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/bConverter.new.js" afterPath="$PROJECT_DIR$/js/bConverter.new.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/bConverter.new.js.map" afterPath="$PROJECT_DIR$/js/bConverter.new.js.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/bConverter.new.ts" afterPath="$PROJECT_DIR$/js/bConverter.new.ts" />
     </list>
     <ignored path="bConverter.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -23,12 +31,56 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="bConverter.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="bConverter.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/bConverter.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2397">
-              <caret line="141" column="1" selection-start-line="141" selection-start-column="1" selection-end-line="141" selection-end-column="1" />
+            <state relative-caret-position="0">
+              <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bConverter.new.ts" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/js/bConverter.new.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="209">
+              <caret line="86" column="8" selection-start-line="86" selection-start-column="8" selection-end-line="86" selection-end-column="8" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#259#1020#0" expanded="false" />
+                <element signature="n#!!block;n#getAllIng#0;n#CN#0" expanded="false" />
+                <element signature="n#!!block;n#geocodingRequest#0;n#CN#0" expanded="false" />
+                <element signature="n#!!block;n#getCountry#0;n#CN#0" expanded="false" />
+                <element signature="n#!!block;n#setMeasureSystem#0;n#CN#0" expanded="false" />
+                <element signature="n#!!block;n#getMeasureSystem#0;n#CN#0" expanded="false" />
+                <element signature="n#!!block;n#dataToSettingPage#0;n#CN#0" expanded="false" />
+                <element signature="n#!!block;n#dataToArray#0;n#CN#0" expanded="false" />
+                <element signature="e#9577#9644#0" expanded="false" />
+                <element signature="n#!!block;n#getData#0;n#CN#0" expanded="false" />
+                <element signature="n#!!block;n#putDataInSelectList#0;n#CN#0" expanded="false" />
+                <element signature="n#!!block;n#validateInputNum#0;n#CN#0" expanded="false" />
+                <element signature="n#!!block;n#loadingOff#0;n#CN#0" expanded="false" />
+                <element signature="n#!!block;n#goToSetting#0;n#CN#0" expanded="false" />
+                <element signature="n#!!block;n#convertTool#0;n#CN#0" expanded="false" />
+                <element signature="n#!!block;n#dataFactor#0" expanded="false" />
+                <element signature="n#!!block;n#Data#0" expanded="false" />
+                <element signature="n#!!block;n#DataIng#0" expanded="false" />
+                <element signature="n#AllIng#0" expanded="false" />
+                <element signature="n#Factor#0" expanded="false" />
+                <element signature="n#Ing#0" expanded="false" />
+                <element signature="n#!!block;n#print#0;n#Ing#0" expanded="false" />
+                <element signature="n#!!block;n#convertResult#0;n#Ing#0" expanded="false" />
+                <element signature="n#WeightIng#0" expanded="false" />
+                <element signature="n#!!block;n#print#0;n#WeightIng#0" expanded="false" />
+                <element signature="n#!!block;n#convertResult#0;n#WeightIng#0" expanded="false" />
+                <element signature="n#!!block;n#gramResultToScreen#0;n#WeightIng#0" expanded="false" />
+                <element signature="n#VolumeIng#0" expanded="false" />
+                <element signature="n#!!block;n#constructor#0;n#VolumeIng#0" expanded="false" />
+                <element signature="n#!!block;n#print#0;n#VolumeIng#0" expanded="false" />
+                <element signature="n#!!block;n#convertResult#0;n#VolumeIng#0" expanded="false" />
+                <element signature="n#Temperature#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -36,31 +88,30 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="14" column="42" selection-start-line="14" selection-start-column="42" selection-end-line="14" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bConverter.new.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/bConverter.new.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-51">
-              <caret line="12" column="14" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
+            <state relative-caret-position="120">
+              <caret line="148" column="45" selection-start-line="148" selection-start-column="37" selection-end-line="148" selection-end-column="45" />
               <folding>
-                <element signature="n#!!doc" expanded="true" />
+                <element signature="n#head#0;n#html#0;n#!!top" expanded="false" />
+                <element signature="n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+                <element signature="n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
+                <element signature="n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
+                <element signature="n#select#0;n#div#1;n#div#1;n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
+                <element signature="n#div#4;n#body#0;n#html#0;n#!!top" expanded="false" />
+                <element signature="n#div#5;n#body#0;n#html#0;n#!!top" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dataUS.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/dataUS.json">
+      <file leaf-file-name="dataIL.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/dataIL.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="9" selection-start-line="6" selection-start-column="9" selection-end-line="6" selection-end-column="9" />
-              <folding />
+            <state relative-caret-position="236">
+              <caret line="108" column="23" selection-start-line="108" selection-start-column="23" selection-end-line="108" selection-end-column="23" />
+              <folding>
+                <element signature="e#28#1265#0" expanded="false" />
+                <element signature="e#1510#1623#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -96,8 +147,14 @@
         <option value="$PROJECT_DIR$/html/main.html" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/js/bConverter.new.js" />
-        <option value="$PROJECT_DIR$/js/bConverter.new.ts" />
         <option value="$PROJECT_DIR$/css/bConverter.css" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/data/dataIL.json" />
+        <option value="$PROJECT_DIR$/data/dataAU.json" />
+        <option value="$PROJECT_DIR$/data/dataCA.json" />
+        <option value="$PROJECT_DIR$/data/dataUK.json" />
+        <option value="$PROJECT_DIR$/data/dataUS.json" />
+        <option value="$PROJECT_DIR$/js/bConverter.new.ts" />
       </list>
     </option>
   </component>
@@ -138,7 +195,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -154,38 +210,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="bConverter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bConverter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bConverter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="draft" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bConverter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bConverter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="draft" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="html" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -219,6 +243,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -236,13 +261,14 @@
     <property name="list.type.of.created.stylesheet" value="CSS" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\bConverter\draft\data" />
+      <recent name="C:\xampp\htdocs\bConverter" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\bConverter\data" />
       <recent name="C:\xampp\htdocs\bConverter\js" />
       <recent name="C:\xampp\htdocs\bConverter\html" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\bConverter" />
     </key>
   </component>
   <component name="RunManager">
@@ -325,12 +351,13 @@
       <workItem from="1472026243124" duration="1320000" />
       <workItem from="1472042828678" duration="115000" />
       <workItem from="1472043123594" duration="1077000" />
-      <workItem from="1472046009704" duration="497000" />
+      <workItem from="1472046009704" duration="13497000" />
+      <workItem from="1472072220578" duration="5255000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="90508000" />
+    <option name="totallyTimeSpent" value="108763000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -350,19 +377,19 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.50595236" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TypeScript Compiler" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3207262" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -402,24 +429,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/css/bConverter.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="33" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/bConverter.ts" />
-    <entry file="file://$PROJECT_DIR$/data/data.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1258">
-          <caret line="74" column="20" selection-start-line="74" selection-start-column="20" selection-end-line="74" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/html/main.html" />
-    <entry file="file://$PROJECT_DIR$/html/main.html" />
     <entry file="file://$PROJECT_DIR$/css/bConverter.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -562,9 +571,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="3" column="21" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -575,45 +582,140 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/bConverter.new.ts">
+    <entry file="file://$PROJECT_DIR$/draft/html/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-51">
-          <caret line="12" column="14" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
+        <state relative-caret-position="238">
+          <caret line="14" column="45" selection-start-line="14" selection-start-column="45" selection-end-line="14" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/draft/data/data.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/bConverter.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/dataCA.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="102" column="21" selection-start-line="102" selection-start-column="21" selection-end-line="102" selection-end-column="21" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#28#1265#0" expanded="false" />
+            <element signature="e#1468#1567#0" expanded="false" />
+            <element signature="e#1841#1924#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/dataAU.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="108" column="23" selection-start-line="108" selection-start-column="23" selection-end-line="108" selection-end-column="23" />
+          <folding>
+            <element signature="e#28#1265#0" expanded="false" />
+            <element signature="e#1515#1628#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/dataUK.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="305">
+          <caret line="108" column="23" selection-start-line="108" selection-start-column="23" selection-end-line="108" selection-end-column="23" />
+          <folding>
+            <element signature="e#28#1265#0" expanded="false" />
+            <element signature="e#1282#1485#0" expanded="false" />
+            <element signature="e#1515#1630#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/data/dataUS.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="9" selection-start-line="6" selection-start-column="9" selection-end-line="6" selection-end-column="9" />
-          <folding />
+        <state relative-caret-position="322">
+          <caret line="102" column="23" selection-start-line="102" selection-start-column="23" selection-end-line="102" selection-end-column="23" />
+          <folding>
+            <element signature="e#28#1265#0" expanded="false" />
+            <element signature="e#1888#1971#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/draft/html/home.html">
+    <entry file="file://$PROJECT_DIR$/data/dataIL.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="45" selection-start-line="14" selection-start-column="45" selection-end-line="14" selection-end-column="45" />
-          <folding />
+        <state relative-caret-position="236">
+          <caret line="108" column="23" selection-start-line="108" selection-start-column="23" selection-end-line="108" selection-end-column="23" />
+          <folding>
+            <element signature="e#28#1265#0" expanded="false" />
+            <element signature="e#1510#1623#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="14" column="42" selection-start-line="14" selection-start-column="42" selection-end-line="14" selection-end-column="42" />
-          <folding />
+        <state relative-caret-position="120">
+          <caret line="148" column="45" selection-start-line="148" selection-start-column="37" selection-end-line="148" selection-end-column="45" />
+          <folding>
+            <element signature="n#head#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#select#0;n#div#1;n#div#1;n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#div#4;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#div#5;n#body#0;n#html#0;n#!!top" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/bConverter.css">
+    <entry file="file://$PROJECT_DIR$/js/bConverter.new.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2397">
-          <caret line="141" column="1" selection-start-line="141" selection-start-column="1" selection-end-line="141" selection-end-column="1" />
-          <folding />
+        <state relative-caret-position="209">
+          <caret line="86" column="8" selection-start-line="86" selection-start-column="8" selection-end-line="86" selection-end-column="8" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#259#1020#0" expanded="false" />
+            <element signature="n#!!block;n#getAllIng#0;n#CN#0" expanded="false" />
+            <element signature="n#!!block;n#geocodingRequest#0;n#CN#0" expanded="false" />
+            <element signature="n#!!block;n#getCountry#0;n#CN#0" expanded="false" />
+            <element signature="n#!!block;n#setMeasureSystem#0;n#CN#0" expanded="false" />
+            <element signature="n#!!block;n#getMeasureSystem#0;n#CN#0" expanded="false" />
+            <element signature="n#!!block;n#dataToSettingPage#0;n#CN#0" expanded="false" />
+            <element signature="n#!!block;n#dataToArray#0;n#CN#0" expanded="false" />
+            <element signature="e#9577#9644#0" expanded="false" />
+            <element signature="n#!!block;n#getData#0;n#CN#0" expanded="false" />
+            <element signature="n#!!block;n#putDataInSelectList#0;n#CN#0" expanded="false" />
+            <element signature="n#!!block;n#validateInputNum#0;n#CN#0" expanded="false" />
+            <element signature="n#!!block;n#loadingOff#0;n#CN#0" expanded="false" />
+            <element signature="n#!!block;n#goToSetting#0;n#CN#0" expanded="false" />
+            <element signature="n#!!block;n#convertTool#0;n#CN#0" expanded="false" />
+            <element signature="n#!!block;n#dataFactor#0" expanded="false" />
+            <element signature="n#!!block;n#Data#0" expanded="false" />
+            <element signature="n#!!block;n#DataIng#0" expanded="false" />
+            <element signature="n#AllIng#0" expanded="false" />
+            <element signature="n#Factor#0" expanded="false" />
+            <element signature="n#Ing#0" expanded="false" />
+            <element signature="n#!!block;n#print#0;n#Ing#0" expanded="false" />
+            <element signature="n#!!block;n#convertResult#0;n#Ing#0" expanded="false" />
+            <element signature="n#WeightIng#0" expanded="false" />
+            <element signature="n#!!block;n#print#0;n#WeightIng#0" expanded="false" />
+            <element signature="n#!!block;n#convertResult#0;n#WeightIng#0" expanded="false" />
+            <element signature="n#!!block;n#gramResultToScreen#0;n#WeightIng#0" expanded="false" />
+            <element signature="n#VolumeIng#0" expanded="false" />
+            <element signature="n#!!block;n#constructor#0;n#VolumeIng#0" expanded="false" />
+            <element signature="n#!!block;n#print#0;n#VolumeIng#0" expanded="false" />
+            <element signature="n#!!block;n#convertResult#0;n#VolumeIng#0" expanded="false" />
+            <element signature="n#Temperature#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

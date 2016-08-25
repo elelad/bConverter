@@ -32,7 +32,7 @@ $(document).on("ready", function () {
     //CN.getCountry();
 });
 $(document).on("pagecontainerbeforechange", function (event, ui) {
-    CN.activePage = ui.toPage[0].id;
+    /*CN.activePage = ui.toPage[0].id;
     switch (CN.activePage) {
         case "pWeight":
             $("#gMeasure").focus();
@@ -49,12 +49,32 @@ $(document).on("pagecontainerbeforechange", function (event, ui) {
             $("#r" + CN.getMeasureSystem()).prop('checked', true).checkboxradio("refresh");
             CN.dataToSettingPage();
             //$("#systemFildset").trigger("create");
-            break;
-    }
+            break
+    }*/
 });
 $(document).on("pagecontainershow", function (event, ui) {
-    $("#loading").popup({
+    CN.activePage = ui.toPage[0].id;
+    switch (CN.activePage) {
+        case "pWeight":
+            $("#gMeasure").focus();
+            break;
+        case "pVolume":
+            $("#mMeasure").focus();
+            break;
+        case "pTemperature":
+            $("#tDegree").focus();
+            break;
+        case "home":
+            break;
+        case "pSetting":
+            $("#r" + CN.getMeasureSystem()).prop('checked', true).checkboxradio("refresh");
+            CN.dataToSettingPage();
+            //$("#systemFildset").trigger("create");
+            break;
+    }
+    $("#loading").enhanceWithin().popup({
         overlayTheme: "b",
+        positionTo: "window",
         transition: "pop",
         history: false
     });
@@ -66,6 +86,8 @@ $(document).on("pagecontainershow", function (event, ui) {
             transition: "pop",
             history: false
         }); //.popup("open");
+        CN.setMeasureSystem();
+        CN.getData();
     }
 });
 //--------------Const Var's & methods-----------------------------
@@ -134,7 +156,7 @@ var CN = (function () {
             // check if measure system exist in local storage if not set default
             localStorage.setItem("bConverterMeasureSystem", CN.measureSystem); //update local storage
         }
-        CN.bConvertData = "../data/data" + CN.measureSystem + ".json"; // update data file address
+        CN.bConvertData = "data/data" + CN.measureSystem + ".json"; // update data file address
         console.log("CN.measureSystem: " + CN.measureSystem);
         $(".pSystemMeasureBtn").html(CN.measureSystem); // update indicator
         return CN.measureSystem;
@@ -148,7 +170,7 @@ var CN = (function () {
         var key = "bConverterData" + CN.measureSystem;
         var data = localStorage.getItem(key);
         var obResponse = JSON.parse(data); //parse response
-        var volume = new VolumeIng(obResponse.ml[0].iName, obResponse.ml[0].iCup, obResponse.ml[0].iSpoon, obResponse.ml[0].iTeaspoon);
+        var volume = new VolumeIng(obResponse.volume.ml[0].iName, obResponse.volume.ml[0].iCup, obResponse.volume.ml[0].iSpoon, obResponse.volume.ml[0].iTeaspoon);
         $("#settingMeasure").html(volume.print());
     };
     CN.dataToArray = function (className) {
@@ -159,15 +181,17 @@ var CN = (function () {
         switch (className) {
             case "WeightIng":
                 CN.allIng = new AllIng();
+                obResponse.weight.factors.forEach(function (item) { return CN.allIng.pushFactors(new Factor(item.fName, item.fValue)); });
                 url = "#pWeight";
-                for (var i = 0; i < obResponse.gram.length; i++) {
-                    CN.allIng.pushIngredient(new WeightIng(obResponse.gram[i].iName, obResponse.gram[i].iCup, obResponse.gram[i].iSpoon, obResponse.gram[i].iTeaspoon));
+                for (var i = 0; i < obResponse.weight.gram.length; i++) {
+                    CN.allIng.pushIngredient(new WeightIng(obResponse.weight.gram[i].iName, obResponse.weight.gram[i].iCup, obResponse.weight.gram[i].iSpoon, obResponse.weight.gram[i].iTeaspoon));
                 }
                 break;
             case ("VolumeIng"):
                 CN.allIng = new AllIng();
+                obResponse.volume.factors.forEach(function (item) { return CN.allIng.pushFactors(new Factor(item.fName, item.fValue)); });
                 url = "#pVolume";
-                CN.allIng.pushIngredient(new VolumeIng(obResponse.ml[0].iName, obResponse.ml[0].iCup, obResponse.ml[0].iSpoon, obResponse.ml[0].iTeaspoon));
+                CN.allIng.pushIngredient(new VolumeIng(obResponse.volume.ml[0].iName, obResponse.volume.ml[0].iCup, obResponse.volume.ml[0].iSpoon, obResponse.volume.ml[0].iTeaspoon));
                 break;
             case ("Temperature"):
                 CN.allIng = new AllIng();
@@ -185,7 +209,15 @@ var CN = (function () {
         }); // go to the page
     }; //get json string, parse it, put in array, display to user
     CN.getData = function (className) {
-        $("#loading").popup("open");
+        setTimeout(function () {
+            $("#loading").enhanceWithin().popup({
+                overlayTheme: "b",
+                positionTo: "window",
+                transition: "pop",
+                history: false
+            }).popup("open");
+        }, 10);
+        //$("#loading").popup("open");
         var tempResponse;
         var key = "bConverterData" + CN.measureSystem;
         var page = CN.activePage;
@@ -218,12 +250,15 @@ var CN = (function () {
     //--------DOM, input, result -------------
     CN.putDataInSelectList = function (className) {
         var listId = "";
+        var unitListId = "";
         switch (className) {
             case "WeightIng":
                 listId = "gIngList";
+                unitListId = "gUnitList";
                 break;
             case "VolumeIng":
                 listId = "mIngList";
+                unitListId = "mUnitList";
                 break;
             case "Temperature":
                 listId = "tIngList";
@@ -239,6 +274,19 @@ var CN = (function () {
                 opt.setAttribute("selected", "true");
             }
             select.appendChild(opt); //put option in the list
+        }
+        if (unitListId != "") {
+            select = document.getElementById(unitListId);
+            select.length = 0;
+            for (var i = 0; i < CN.allIng.getFactors().length; i++) {
+                var opt = document.createElement("option"); //create option
+                opt.value = i.toString(); // put value in option
+                opt.text = CN.allIng.getFactors()[i].getName(); // put text in option
+                if (i == 0) {
+                    opt.setAttribute("selected", "true");
+                }
+                select.appendChild(opt); //put option in the list
+            }
         }
         //select.value = "0";
     }; // method to put options in select ingredients html list
@@ -288,7 +336,7 @@ var CN = (function () {
     }; // get tool & result and return cups or cup
     CN.dataReady = false;
     CN.activePage = "home"; // to store active page
-    CN.bConvertData = "../data/dataUS.json"; //address for data file in use
+    CN.bConvertData = "data/dataUS.json"; //address for data file in use
     //private static query: string = "";
     //---------find country with google maps------------
     CN.apiKey = "AIzaSyDzyEu__JkZf-ao55rgd6BtLxhHk4493b4"; // api  key for google maps
@@ -304,7 +352,11 @@ var CN = (function () {
 var AllIng = (function () {
     function AllIng() {
         this.aIngredients = []; //array for all ingredients for a kind
+        this.factors = [];
     }
+    AllIng.prototype.pushFactors = function (factor) {
+        this.factors.push(factor);
+    }; //method to push factors to array
     AllIng.prototype.pushIngredient = function (ing) {
         this.aIngredients.push(ing);
     }; //method to push ingredient to array
@@ -316,8 +368,27 @@ var AllIng = (function () {
     AllIng.prototype.getIngredients = function () {
         return this.aIngredients;
     };
+    AllIng.prototype.getFactors = function () {
+        return this.factors;
+    };
     return AllIng;
 }()); //generic class for array for ingredient for all child's of Ing
+var Factor = (function () {
+    function Factor(fName, fValue) {
+        this.fName = fName;
+        this.fValue = fValue;
+    }
+    Factor.prototype.getName = function () {
+        return this.fName;
+    };
+    Factor.prototype.getValue = function () {
+        return this.fValue;
+    };
+    Factor.prototype.factorize = function (num) {
+        return num * this.fValue;
+    };
+    return Factor;
+}());
 var Ing = (function () {
     function Ing(iName) {
         this.iName = iName;
@@ -328,49 +399,53 @@ var Ing = (function () {
     Ing.prototype.print = function () {
         return "";
     }; // for override
-    Ing.prototype.convertResult = function (grams, tool) {
+    Ing.prototype.convertResult = function (grams, tool, factor) {
         return -1;
     }; // for override
     return Ing;
 }()); // class for one ingredient
 var WeightIng = (function (_super) {
     __extends(WeightIng, _super);
-    function WeightIng(iName, iCupToGram, iSpoonToGram, iTeaspoonToGram) {
+    function WeightIng(iName, iCupTo, iSpoonTo, iTeaspoonTo) {
         _super.call(this, iName);
-        this.iCupToGram = iCupToGram;
-        this.iSpoonToGram = iSpoonToGram;
-        this.iTeaspoonToGram = iTeaspoonToGram;
-        this.iGramToCup = 1 / this.iCupToGram;
-        this.iGramToSpoon = 1 / this.iSpoonToGram;
-        this.iGramToTeaspoon = 1 / this.iTeaspoonToGram;
+        this.iCupTo = iCupTo;
+        this.iSpoonTo = iSpoonTo;
+        this.iTeaspoonTo = iTeaspoonTo;
+        this.iToCup = 1 / this.iCupTo;
+        this.iToSpoon = 1 / this.iSpoonTo;
+        this.iToTeaspoon = 1 / this.iTeaspoonTo;
     }
     WeightIng.prototype.print = function () {
-        return _super.prototype.print.call(this) + " CupToGram:" + this.iCupToGram + " SpoonToGram:" + this.iSpoonToGram + " TeaspoonToGram:" + this.iTeaspoonToGram;
+        return _super.prototype.print.call(this) + " CupToGram:" + this.iCupTo + " SpoonToGram:" + this.iSpoonTo + " TeaspoonToGram:" + this.iTeaspoonTo;
     };
     //@Override
-    WeightIng.prototype.convertResult = function (grams, tool) {
+    WeightIng.prototype.convertResult = function (grams, tool, factor) {
         var result;
         switch (tool) {
             case "Cup":
-                result = grams * this.iGramToCup;
+                result = grams * this.iToCup;
                 break;
             case "Spoon":
-                result = grams * this.iGramToSpoon;
+                result = grams * this.iToSpoon;
                 break;
             case "Teaspoon":
-                result = grams * this.iGramToTeaspoon;
+                result = grams * this.iToTeaspoon;
                 break;
         }
+        result *= factor;
         return (result > 0) ? Math.round((result) * 10) / 10 : -1; //if no data to convert return -1
     }; //convert and get result in number
     WeightIng.gramResultToScreen = function () {
-        var measure = parseInt($("#gMeasure").val()); // get grams from user
-        var measureName = $("#gMeasureLabel").html(); //get measure label (garm or ml)
-        console.log(measureName);
+        var measure = parseFloat($("#gMeasure").val()); // get grams from user
+        //let measureName: string = $("#gMeasureLabel").html(); //get measure label (garm or ml)
         var tool = $("#gToList").val(); //get tool from user
         var ingNumber = parseInt($("#gIngList").val()); //get ingredient from user
+        var factorNumber = parseInt($("#gUnitList").val());
+        var measureName = CN.getAllIng().getFactors()[factorNumber].getName();
+        console.log(measureName);
+        var factor = CN.getAllIng().getFactors()[factorNumber].getValue();
         console.log("measure: " + measure + " tool:" + tool);
-        var result = CN.getAllIng().getIngredients()[ingNumber].convertResult(measure, tool);
+        var result = CN.getAllIng().getIngredients()[ingNumber].convertResult(measure, tool, factor);
         if (result < 0) {
             $("#gResult").html("Can't convert to " + tool).show().css("display", "inline-block");
         }
@@ -397,7 +472,7 @@ var VolumeIng = (function (_super) {
         return _super.prototype.print.call(this) + "Cup = " + this.iCupToMl + "ml<br> Spoon = " + this.iSpoonToMl + "ml<br> Teaspoon = " + this.iTeaspoonToMl + "ml";
     };
     //@Override
-    VolumeIng.prototype.convertResult = function (grams, tool) {
+    VolumeIng.prototype.convertResult = function (grams, tool, factor) {
         var result;
         switch (tool) {
             case "Cup":
@@ -410,21 +485,28 @@ var VolumeIng = (function (_super) {
                 result = grams * this.iMlToTeaspoon;
                 break;
         }
+        result *= factor;
         return (result > 0) ? Math.round((result) * 10) / 10 : -1; //if no data to convert return -1
     };
     VolumeIng.mlResultToScreen = function () {
-        var measure = parseInt($("#mMeasure").val()); // get grams from user
-        var measureName = $("#mMeasureLabel").html(); //get measure label (garm or ml)
-        console.log(measureName);
+        var measure = parseFloat($("#mMeasure").val()); // get grams from user
+        //let measureName: string = $("#mMeasureLabel").html(); //get measure label (garm or ml)
         var tool = $("#mToList").val(); //get tool from user
         var ingNumber = parseInt($("#mIngList").val()); //get ingredient from user
         console.log("measure: " + measure + " tool:" + tool);
-        var result = CN.getAllIng().getIngredients()[ingNumber].convertResult(measure, tool);
+        var factorNumber = parseInt($("#mUnitList").val());
+        var measureName = CN.getAllIng().getFactors()[factorNumber].getName();
+        console.log(measureName);
+        console.log(measureName);
+        var factor = CN.getAllIng().getFactors()[factorNumber].getValue();
+        var result = CN.getAllIng().getIngredients()[ingNumber].convertResult(measure, tool, factor);
         if (result < 0) {
-            $("#mResult").html("are you nuts?? " + measure + " " + measureName + " of " + CN.getAllIng().getIngredients()[ingNumber].ingName() + "??").show().css("display", "inline-block");
+            $("#mResult").html("Can't convert to " + tool).show().css("display", "inline-block");
         }
         else {
-            $("#mResult").html(measure + " " + measureName + " = " + CN.getAllIng().getIngredients()[ingNumber].convertResult(measure, tool) + " " + tool).show().css("display", "inline-block"); // display result
+            var toolToPrint = CN.convertTool(tool, result);
+            $("#mResult").html(measure + " " + measureName + " = " + result + " " + toolToPrint).show()
+                .css("display", "inline-block"); // display result
         }
     }; // method to calculate convert result and show it to the user - for ml only
     VolumeIng.className = "VolumeIng";
