@@ -8,14 +8,20 @@
 
 //---------------- Listeners -----------------------------------
 $(document).on("ready", function () {
-    $("#gResult").hide();
-    $("#mResult").hide();
-    $("#tResult").hide();
+    CN.clearResults();
     CN.setMeasureSystem();
     $('input[type=radio][name=mSystem]').change(function () {// if user changed measure system
+        CN.oldMeasureSystem = CN.getMeasureSystem();
         CN.setMeasureSystem(this.value);
+        CN.clearResults();
         $("#pSystemMeasureBtn").html(CN.getMeasureSystem());
         CN.getData(); //if measure system changed then get new data
+    });
+    $("#gUnitList,#gToList").change(function () {// if user changed measure system
+        $("#gResult").hide();
+    });
+    $("#mUnitList,#mToList").change(function () {// if user changed measure system
+        $("#mResult").hide();
     });
     $("#locationYesBtn").on("click", function () {
         $("#locationPopup").popup("close");
@@ -28,6 +34,7 @@ $(document).on("ready", function () {
         CN.setMeasureSystem();
         CN.getData();
     });
+    //window.location = "index.html";
     //CN.getCountry();
 });
 $(document).on("pagecontainerbeforechange", function (event, ui) {
@@ -93,6 +100,7 @@ $(document).on("pagecontainershow", function (event, ui) {
 //--------------Const Var's & methods-----------------------------
 class CN {
     static dataReady: boolean = false;
+    static dataVersion = "V0.7.0 D27082016";
     static activePage: string = "home"; // to store active page
     private static allIng; //initialize new array for ingredients
     static getAllIng() {
@@ -111,6 +119,7 @@ class CN {
     private static userCountryShort: string = "";
 
     static getCountry(): void {
+        CN.oldMeasureSystem = CN.getMeasureSystem();
         function geoSuccess(pos: Position): void {
             $("#loading").popup("open");
             var lat = pos.coords.latitude;
@@ -133,19 +142,20 @@ class CN {
                         CN.getData();
                     }
                 })
+            }).fail(function() {
+                CN.errorLoadingData();
             })
         } // if navigator geoLocation request success
         function geoError(error) {
-            $("#loading").popup("open");
             console.log(error);
-            CN.setMeasureSystem();
-            CN.getData();
+            CN.errorLoadingData();
         } // if navigator geoLocation request error
         navigator.geolocation.getCurrentPosition(geoSuccess, geoError); // send the request
     }//get countryfrom user and get the relevant data
 
     //---------measure system----------------
     private static measureSystem: string = ""; // var for measure System
+    static oldMeasureSystem = "";
     static setMeasureSystem(mSystem?: string): string {
         if (mSystem) { // if prefered measure System passed to the function
             switch (mSystem) {
@@ -164,7 +174,8 @@ class CN {
             }
             localStorage.setItem("bConverterMeasureSystem", CN.measureSystem);
         } else { // if prefered measure System didnt passed to the function
-            CN.measureSystem = (localStorage.getItem("bConverterMeasureSystem")) ? localStorage.getItem("bConverterMeasureSystem") : "US";
+            CN.measureSystem = (localStorage.getItem("bConverterMeasureSystem")) ?
+                localStorage.getItem("bConverterMeasureSystem") : "US";
             // check if measure system exist in local storage if not set default
             localStorage.setItem("bConverterMeasureSystem", CN.measureSystem); //update local storage
         }
@@ -188,6 +199,15 @@ class CN {
         var volume = new VolumeIng(obResponse.volume.ml[0].iName, obResponse.volume.ml[0].iCup, obResponse.volume.ml[0].iSpoon,
             obResponse.volume.ml[0].iTeaspoon);
         $("#settingMeasure").html(volume.print());
+    }
+    static errorLoadingData():void{
+        console.log("error loading data ");
+        CN.setMeasureSystem(CN.oldMeasureSystem);//go back to previous
+        $("#errorMsg").html("Can't Load Data").fadeIn(1000).delay(3000).fadeOut(1000);//display error msg
+        $("[name=mSystem]").prop('checked', false).checkboxradio("refresh");
+        $("#r" + CN.getMeasureSystem()).prop('checked', true).checkboxradio("refresh"); //update radioCheckboxes
+        CN.dataToSettingPage();
+        CN.loadingOff();
     }
 
     static dataToArray(className: string): void {
@@ -236,30 +256,38 @@ class CN {
                 history: false
             }).popup("open");
         }, 10);
+        $("#errorMsg").hide();
         //$("#loading").popup("open");
         var tempResponse: string;
         var key = "bConverterData" + CN.measureSystem;
+        var localstoregeVersion = localStorage.getItem("bConverterDataVersion");
         var page: string = CN.activePage;
         console.log(page);
-        if (localStorage.getItem(key)) { //if there is local data get it
+        if (localStorage.getItem(key) && localstoregeVersion == CN.dataVersion) { //if there is local data get it
             tempResponse = localStorage.getItem(key); //get response
             if (CN.activePage == "pSetting") {
                 CN.dataToSettingPage();
             }
+            console.log("data from localstorage");
             CN.loadingOff();
-        } else { //if there isnt local data get it from the server
+        } else { //if there isn't local data get it from the server
             CN.ingRequest.abort();
             CN.ingRequest.open("GET", CN.bConvertData, true);
             CN.ingRequest.onreadystatechange = function () {
                 if (CN.ingRequest.readyState == 4 && CN.ingRequest.status == 200) {
                     tempResponse = CN.ingRequest.responseText; //get response
                     localStorage.setItem(key, tempResponse);
+                    localStorage.setItem("bConverterDataVersion", CN.dataVersion);
                     CN.dataReady = true;
                     //console.log(JSON.parse(tempResponse));
                     if (CN.activePage == "pSetting") {
                         CN.dataToSettingPage();
                     }
+                    console.log("data from server");
                     CN.loadingOff();
+                }
+                if (CN.ingRequest.readyState == 4 && CN.ingRequest.status != 200) {
+                    CN.errorLoadingData();
                 }
             };
             this.ingRequest.send(null);
@@ -339,10 +367,18 @@ class CN {
             return false;
         }
     }//validate user input and pass if validated
-    static loadingOff() {
+    static loadingOff():void {
         setTimeout(function () {
             $("#loading").popup("close");
         }, 1500)
+    }
+    static clearResults():void{
+        $("#gResult").hide();
+        $("#mResult").hide();
+        $("#tResult").hide();
+        $("#gMeasure").val("");
+        $("#mMeasure").val("");
+        $("#tDegree").val("");
     }
 
     static goToSetting() {

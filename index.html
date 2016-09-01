@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" manifest="bConverter.caching"> <!--manifest="bConverter.caching"-->
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
@@ -86,7 +86,7 @@
     </div>
 
     <div data-role="content">
-        <h2>Convert gram to Cup, Spoon, Teaspoon</h2>
+        <h2>Convert Weight to Cup, Spoon, Teaspoon</h2>
         <!-- -------Ingredient----------- -->
         <div data-role="controlgroup" data-type="horizontal">
             <button class="dollBtn" onclick="$(this).blur()">Convert</button>
@@ -139,7 +139,7 @@
         </div>
     </div>
     <div data-role="content">
-        <h2>Convert ml to Cup, Spoon, Teaspoon</h2>
+        <h2>Convert Volume to Cup, Spoon, Teaspoon</h2>
         <div class="ui-screen-hidden">
             <select name="mIngList" id="mIngList"></select>
         </div>
@@ -226,6 +226,7 @@
 
     <div data-role="content">
         <h2>Measure System</h2>
+        <span id="errorMsg" class="errorMsg">ddf</span>
         <a onclick="CN.getCountry()" class="ui-btn ui-icon-location ui-btn-icon-left ui-btn-b ui-nodisc-icon
             ui-btn-corner-all ui-btn-inline">Get From Location</a>
         <fieldset data-role="controlgroup" data-type="horizontal" id="systemFildset">
