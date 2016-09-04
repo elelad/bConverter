@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" manifest="bConverter.caching"> <!--manifest="bConverter.caching"-->
+<html lang="en"> <!--manifest="bConverter.caching"-->
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
@@ -100,7 +100,7 @@
             <button class="dollBtn" onclick="$(this).blur()">From</button>
             <label for="gMeasure" id="gMeasureLabel">gram</label>
             <input type="number" id="gMeasure" placeholder="" data-wrapper-class="controlgroup-textinput ui-btn"
-                   pattern="[0-9]">
+                   pattern="[0-9]" tabindex="1">
             <select name="gUnitList" id="gUnitList" data-inline="true"
                     data-wrapper-class="controlgroup-textinput ui-btn">
                 <option value="" disabled selected>Select your option</option>
@@ -118,7 +118,7 @@
         </div>
         <!-- -------Submit----------- -->
         <button type="submit" onclick="CN.validateInputNum(document.getElementById('gMeasure'))"
-                class="ui-btn ui-btn-inline ui-btn-corner-all ui-overlay-shadow resultBtn">
+                class="ui-btn ui-btn-inline ui-btn-corner-all ui-overlay-shadow resultBtn" tabindex="2">
             Convert!
         </button>  <!--WeightIng.gramResultToScreen()-->
         <br>
@@ -146,7 +146,7 @@
         <!-- -------From----------- -->
         <div data-role="controlgroup" data-type="horizontal">
             <button class="dollBtn">From</button>
-            <input type="number" id="mMeasure" data-wrapper-class="controlgroup-textinput ui-btn" pattern="[0-9]">
+            <input type="number" id="mMeasure" data-wrapper-class="controlgroup-textinput ui-btn" pattern="[0-9]" tabindex="1">
             <label for="mMeasure" id="mMeasureLabel">ml</label>
             <select name="mUnitList" id="mUnitList" data-inline="true"
                     data-wrapper-class="controlgroup-textinput ui-btn">
@@ -165,7 +165,7 @@
         </div>
         <!-- -------Submit----------- -->
         <button type="submit" onclick="CN.validateInputNum(document.getElementById('mMeasure'))"
-                class="ui-btn ui-btn-inline ui-btn-corner-all ui-overlay-shadow" tabindex="1">Convert!
+                class="ui-btn ui-btn-inline ui-btn-corner-all ui-overlay-shadow" tabindex="2">Convert!
         </button> <!--VolumeIng.mlResultToScreen()-->
         <br>
         <!-- -------Result----------- -->
@@ -190,9 +190,9 @@
         <!-- -------From----------- -->
         <div data-role="controlgroup" data-type="horizontal">
             <button class="dollBtn">From</button>
-            <input type="number" id="tDegree" data-wrapper-class="controlgroup-textinput ui-btn" pattern="[0-9]">
+            <input type="number" id="tDegree" data-wrapper-class="controlgroup-textinput ui-btn" pattern="[0-9]" tabindex="1">
             <label for="tDegree" id="degreeLabel">&#176 </label>
-            <button class="dollBtn">&#176</button>
+            <button id="tDegreeSign" class="dollBtn">&#176</button>
             <select name="ingList" id="tIngList" onchange="Temperature.toggleCeFa()"
                     data-wrapper-class="controlgroup-textinput ui-btn"></select>
         </div>
@@ -202,7 +202,7 @@
         </div>
         <!-- -------Submit----------- -->
         <button type="submit" onclick="CN.validateInputNum(document.getElementById('tDegree'))"
-                class="ui-btn ui-btn-inline ui-btn-corner-all ui-overlay-shadow">
+                class="ui-btn ui-btn-inline ui-btn-corner-all ui-overlay-shadow" tabindex="2">
             Convert!
         </button> <!--Temperature.temperatureResultToScreen()-->
         <br>
@@ -227,7 +227,7 @@
     <div data-role="content">
         <h2>Measure System</h2>
         <span id="errorMsg" class="errorMsg">ddf</span>
-        <a onclick="CN.getCountry()" class="ui-btn ui-icon-location ui-btn-icon-left ui-btn-b ui-nodisc-icon
+        <a onclick="" id="getCountryBtn" class="ui-btn ui-icon-location ui-btn-icon-left ui-btn-b ui-nodisc-icon
             ui-btn-corner-all ui-btn-inline">Get From Location</a>
         <fieldset data-role="controlgroup" data-type="horizontal" id="systemFildset">
             <input type="radio" value="US" name="mSystem" id="rUS"/><label for="rUS">US</label>

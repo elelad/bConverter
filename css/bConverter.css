@@ -19,7 +19,7 @@ h2{
 }
 .ui-page {
     /*background: rgba(0,0,255,0.05);*/
-    background-image: url("../src/handsCover.png");
+    background-image: url("../src/handsCoverLight.jpg");
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -32,9 +32,9 @@ h2{
 
 .controlgroup-textinput{
     padding:.22em;
-    /*padding-bottom:.22em;*/
+    padding-bottom:.23em;
     box-shadow: none;
-    width: 80px;
+    /*width: 40px;*/
 }
 
 .dollBtn{
@@ -77,14 +77,38 @@ h2{
 
 /*----------ids---------------- */
 
+#gMeasure, #mMeasure, #tDegree{
+    width: 3em;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+#tDegreeSign{
+    width: 0.3em;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-left: none;
+}
+
 #credit{
     position: absolute;
     bottom: 10px;
+    left: 0;
     margin-left: 50%;
     transform: translate(-50%);
+    width: 90%;
     color: white;
     text-shadow: none;
+    text-align: center;
     font-size: 0.8em;
+    /*padding-right: 5%;
+    padding-left: 5%;*/
+
 }
 #credit a{
     color: white;

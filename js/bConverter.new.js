@@ -6,7 +6,6 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 //TODO update data in data files
-//TODO getCountry function
 //---------------- Listeners -----------------------------------
 $(document).on("ready", function () {
     CN.clearResults();
@@ -15,49 +14,55 @@ $(document).on("ready", function () {
         CN.oldMeasureSystem = CN.getMeasureSystem();
         CN.setMeasureSystem(this.value);
         CN.clearResults();
-        $("#pSystemMeasureBtn").html(CN.getMeasureSystem());
         CN.getData(); //if measure system changed then get new data
-    });
+        //$("#pSystemMeasureBtn").html(CN.getMeasureSystem());
+    }); // if user changed measure system in setting page
     $("#gUnitList,#gToList").change(function () {
         $("#gResult").hide();
-    });
+    }); // if user changed measure system in weight page
     $("#mUnitList,#mToList").change(function () {
         $("#mResult").hide();
-    });
+    }); // if user changed measure system  in volume page
     $("#locationYesBtn").on("click", function () {
         $("#locationPopup").popup("close");
         $("#loading").popup("open");
         CN.getCountry();
-    });
+    }); //location popup ===not active===
     $("#locationNoBtn").on("click", function () {
         $("#locationPopup").popup("close");
         $("#loading").popup("open");
         CN.setMeasureSystem();
         CN.getData();
-    });
+    }); //location popup ===not active===
+    $("#gMeasure, #mMeasure, #tDegree").on("keypress", function (e) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if (code == 13) {
+            e.preventDefault();
+            CN.validateInputNum(this);
+            this.blur(); //close keyboard in mobile
+        }
+    }); //show result if user pressed enter at input
     //window.location = "index.html";
     //CN.getCountry();
 });
 $(document).on("pagecontainerbeforechange", function (event, ui) {
-    /*CN.activePage = ui.toPage[0].id;
+    CN.activePage = ui.toPage[0].id;
     switch (CN.activePage) {
         case "pWeight":
-            $("#gMeasure").focus();
             break;
         case "pVolune":
-            $("#mMeasure").focus();
             break;
         case "pTemperature":
-            $("#tDegree").focus();
             break;
         case "home":
             break;
         case "pSetting":
             $("#r" + CN.getMeasureSystem()).prop('checked', true).checkboxradio("refresh");
             CN.dataToSettingPage();
+            $("#getCountryBtn").on("click", CN.getCountry);
             //$("#systemFildset").trigger("create");
-            break
-    }*/
+            break;
+    }
 });
 $(document).on("pagecontainershow", function (event, ui) {
     CN.activePage = ui.toPage[0].id;
@@ -74,9 +79,6 @@ $(document).on("pagecontainershow", function (event, ui) {
         case "home":
             break;
         case "pSetting":
-            $("#r" + CN.getMeasureSystem()).prop('checked', true).checkboxradio("refresh");
-            CN.dataToSettingPage();
-            //$("#systemFildset").trigger("create");
             break;
     }
     $("#loading").enhanceWithin().popup({
@@ -84,7 +86,7 @@ $(document).on("pagecontainershow", function (event, ui) {
         positionTo: "window",
         transition: "pop",
         history: false
-    });
+    }); //loading popup
     if ((ui.toPage[0].id == "home") && (ui.prevPage.length == 0)) {
         //var popupPos = $("#popupPos");
         $("#locationPopup").popup({
@@ -107,7 +109,15 @@ var CN = (function () {
     CN.geocodingRequest = function (lonlat) {
         return "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lonlat + "&key=" + CN.apiKey;
     }; // address builder for google maps
+    CN.getAndroidLoactionP = function () {
+        try {
+            console.log("request to android");
+            Android.requestLocation();
+        }
+        finally { }
+    };
     CN.getCountry = function () {
+        CN.getAndroidLoactionP();
         CN.oldMeasureSystem = CN.getMeasureSystem();
         function geoSuccess(pos) {
             $("#loading").popup("open");
@@ -137,6 +147,10 @@ var CN = (function () {
         } // if navigator geoLocation request success
         function geoError(error) {
             console.log(error);
+            try {
+                Android.showToast("Allow location and try again");
+            }
+            finally { }
             CN.errorLoadingData();
         } // if navigator geoLocation request error
         navigator.geolocation.getCurrentPosition(geoSuccess, geoError); // send the request
@@ -181,7 +195,7 @@ var CN = (function () {
         var obResponse = JSON.parse(data); //parse response
         var volume = new VolumeIng(obResponse.volume.ml[0].iName, obResponse.volume.ml[0].iCup, obResponse.volume.ml[0].iSpoon, obResponse.volume.ml[0].iTeaspoon);
         $("#settingMeasure").html(volume.print());
-    };
+    }; // change data in setting page base on measure system
     CN.errorLoadingData = function () {
         console.log("error loading data ");
         CN.setMeasureSystem(CN.oldMeasureSystem); //go back to previous
@@ -190,7 +204,7 @@ var CN = (function () {
         $("#r" + CN.getMeasureSystem()).prop('checked', true).checkboxradio("refresh"); //update radioCheckboxes
         CN.dataToSettingPage();
         CN.loadingOff();
-    };
+    }; // show msg if cant get data
     CN.dataToArray = function (className) {
         var key = "bConverterData" + CN.measureSystem;
         var data = localStorage.getItem(key);
@@ -223,7 +237,7 @@ var CN = (function () {
         CN.putDataInSelectList(className); // put ingredients names in the select list
         $.mobile.changePage(url, {
             dataUrl: "h",
-            showLoadMsg: true
+            showLoadMsg: false
         }); // go to the page
     }; //get json string, parse it, put in array, display to user
     CN.getData = function (className) {
@@ -249,6 +263,7 @@ var CN = (function () {
             }
             console.log("data from localstorage");
             CN.loadingOff();
+            $("#pSystemMeasureBtn").html(CN.getMeasureSystem());
         }
         else {
             CN.ingRequest.abort();
@@ -265,6 +280,7 @@ var CN = (function () {
                     }
                     console.log("data from server");
                     CN.loadingOff();
+                    $("#pSystemMeasureBtn").html(CN.getMeasureSystem());
                 }
                 if (CN.ingRequest.readyState == 4 && CN.ingRequest.status != 200) {
                     CN.errorLoadingData();
