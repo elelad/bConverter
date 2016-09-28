@@ -5,7 +5,6 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-//TODO update data in data files
 //---------------- Listeners -----------------------------------
 $(document).on("ready", function () {
     CN.clearResults();
@@ -44,6 +43,9 @@ $(document).on("ready", function () {
     }); //show result if user pressed enter at input
     //window.location = "index.html";
     //CN.getCountry();
+    $(function () {
+        $("#bMenu").enhanceWithin().popup();
+    });
 });
 $(document).on("pagecontainerbeforechange", function (event, ui) {
     CN.activePage = ui.toPage[0].id;
@@ -109,15 +111,23 @@ var CN = (function () {
     CN.geocodingRequest = function (lonlat) {
         return "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lonlat + "&key=" + CN.apiKey;
     }; // address builder for google maps
-    CN.getAndroidLoactionP = function () {
+    CN.getAndroidLocationP = function () {
         try {
             console.log("request to android");
             Android.requestLocation();
         }
-        finally { }
-    };
-    CN.getCountry = function () {
-        CN.getAndroidLoactionP();
+        catch (e) {
+            console.log(e);
+        }
+        finally {
+        }
+    }; //display android location permeation request for marshmallow
+    CN.getCountry = function (fAndroid) {
+        console.log("getCountry Activated");
+        console.log("fAndroid: " + fAndroid + "");
+        if (fAndroid != true) {
+            CN.getAndroidLocationP();
+        }
         CN.oldMeasureSystem = CN.getMeasureSystem();
         function geoSuccess(pos) {
             $("#loading").popup("open");
@@ -150,7 +160,11 @@ var CN = (function () {
             try {
                 Android.showToast("Allow location and try again");
             }
-            finally { }
+            catch (e) {
+                console.log(e);
+            }
+            finally {
+            }
             CN.errorLoadingData();
         } // if navigator geoLocation request error
         navigator.geolocation.getCurrentPosition(geoSuccess, geoError); // send the request
@@ -163,19 +177,20 @@ var CN = (function () {
                 case "UK":
                 case "AU":
                 case "CA":
+                case "EU":
                     CN.measureSystem = mSystem;
                     break;
                 case "":
                     break;
                 default:
-                    CN.measureSystem = "US";
+                    CN.measureSystem = "EU";
                     console.log(mSystem);
             }
             localStorage.setItem("bConverterMeasureSystem", CN.measureSystem);
         }
         else {
             CN.measureSystem = (localStorage.getItem("bConverterMeasureSystem")) ?
-                localStorage.getItem("bConverterMeasureSystem") : "US";
+                localStorage.getItem("bConverterMeasureSystem") : "EU";
             // check if measure system exist in local storage if not set default
             localStorage.setItem("bConverterMeasureSystem", CN.measureSystem); //update local storage
         }
@@ -233,11 +248,12 @@ var CN = (function () {
                 }
                 break;
         }
-        CN.allIng.printIngArray();
+        //CN.allIng.printIngArray();
         CN.putDataInSelectList(className); // put ingredients names in the select list
         $.mobile.changePage(url, {
             dataUrl: "h",
-            showLoadMsg: false
+            showLoadMsg: false,
+            transition: CN.bTransition
         }); // go to the page
     }; //get json string, parse it, put in array, display to user
     CN.getData = function (className) {
@@ -256,6 +272,14 @@ var CN = (function () {
         var localstoregeVersion = localStorage.getItem("bConverterDataVersion");
         var page = CN.activePage;
         console.log(page);
+        if (localstoregeVersion != CN.dataVersion) {
+            for (var i = (localStorage.length); i >= 0; i--) {
+                var keyToDelete = String(localStorage.key(i));
+                if (keyToDelete.startsWith("bConverterData")) {
+                    localStorage.removeItem(keyToDelete + "");
+                }
+            }
+        }
         if (localStorage.getItem(key) && localstoregeVersion == CN.dataVersion) {
             tempResponse = localStorage.getItem(key); //get response
             if (CN.activePage == "pSetting") {
@@ -307,16 +331,16 @@ var CN = (function () {
                 break;
         }
         var select = document.getElementById(listId);
+        $(select).empty();
         select.length = 0;
         for (var i = 0; i < CN.allIng.getIngredients().length; i++) {
             var opt = document.createElement("option"); //create option
             opt.value = i.toString(); // put value in option
             opt.text = CN.allIng.getIngredients()[i].ingName(); // put text in option
-            if (i == 0) {
-                opt.setAttribute("selected", "true");
-            }
+            //if (i == 0) {opt.setAttribute("selected", "true");}
             select.appendChild(opt); //put option in the list
         }
+        $("#" + listId).selectmenu().selectmenu("refresh"); // refresh list to show the first ingridiante
         if (unitListId != "") {
             select = document.getElementById(unitListId);
             select.length = 0;
@@ -324,13 +348,12 @@ var CN = (function () {
                 var opt = document.createElement("option"); //create option
                 opt.value = i.toString(); // put value in option
                 opt.text = CN.allIng.getFactors()[i].getName(); // put text in option
-                if (i == 0) {
-                    opt.setAttribute("selected", "true");
-                }
+                //if (i == 0) {opt.setAttribute("selected", "true");}
                 select.appendChild(opt); //put option in the list
             }
         }
-        //select.value = "0";
+        $("#" + unitListId).selectmenu().selectmenu('refresh');
+        //select.value = "1";
     }; // method to put options in select ingredients html list
     CN.validateInputNum = function (element) {
         var measure = parseInt($(element).val());
@@ -378,16 +401,25 @@ var CN = (function () {
     CN.goToSetting = function () {
         $.mobile.changePage("#pSetting", {
             dataUrl: "h",
-            showLoadMsg: true
+            showLoadMsg: true,
+            transition: CN.bTransition
+        }); // go to the page
+    }; // go to setting page
+    CN.goToAbout = function () {
+        $.mobile.changePage("#pAbout", {
+            dataUrl: "h",
+            showLoadMsg: true,
+            transition: CN.bTransition
         }); // go to the page
     }; // go to setting page
     CN.convertTool = function (tool, result) {
         return (result > 1) ? tool + "s" : tool;
     }; // get tool & result and return cups or cup
     CN.dataReady = false;
-    CN.dataVersion = "V0.7.0 D27082016";
+    CN.dataVersion = "V0.7.0 D08092016";
     CN.activePage = "home"; // to store active page
-    CN.bConvertData = "data/dataUS.json"; //address for data file in use
+    CN.bConvertData = "data/dataEU.json"; //address for data file in use
+    CN.bTransition = "slide";
     //private static query: string = "";
     //---------find country with google maps------------
     CN.apiKey = "AIzaSyDzyEu__JkZf-ao55rgd6BtLxhHk4493b4"; // api  key for google maps
@@ -503,7 +535,7 @@ var WeightIng = (function (_super) {
         }
         else {
             var toolToPrint = CN.convertTool(tool, result);
-            $("#gResult").html(measure + " " + measureName + " = " + result + " " + toolToPrint).show().css("display", "inline-block"); // display result
+            $("#gResult").html("<p class='ingName'>" + CN.getAllIng().getIngredients()[ingNumber].ingName() + "</p>" + measure + " " + measureName + " = " + result + " " + toolToPrint).show().css("display", "inline-block"); // display result
         }
     }; // method to calculate convert result and show it to the user - for gram only
     WeightIng.className = "WeightIng";

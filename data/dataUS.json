@@ -2,70 +2,70 @@
   "weight": {
     "gram": [
       {
-        "iName": "Flour",
-        "iCup": 140,
-        "iSpoon": 10,
-        "iTeaspoon": -1
+        "iName": "Flour, all-purpose, unsifted",
+        "iCup": 124.9,
+        "iSpoon": 7.807,
+        "iTeaspoon": 2.602
+      },
+      {
+        "iName": "Flour, all-purpose, sifted",
+        "iCup": 99.37,
+        "iSpoon": 6.21,
+        "iTeaspoon": 2.07
       },
       {
         "iName": "Cocoa",
-        "iCup": 140,
-        "iSpoon": 10,
-        "iTeaspoon": -1
-      },
-      {
-        "iName": "Cornflour",
-        "iCup": 140,
-        "iSpoon": 10,
-        "iTeaspoon": -1
+        "iCup": 111.2,
+        "iSpoon": 6.95,
+        "iTeaspoon": 2.317
       },
       {
         "iName": "Salt",
-        "iCup": -1,
-        "iSpoon": 15,
-        "iTeaspoon": 5
+        "iCup": 241.3,
+        "iSpoon": 15.08,
+        "iTeaspoon": 5.028
       },
       {
-        "iName": "WhiteSugar",
-        "iCup": 200,
-        "iSpoon": 12,
-        "iTeaspoon": 4
+        "iName": "White Sugar",
+        "iCup": 191.6,
+        "iSpoon": 11.98,
+        "iTeaspoon": 3.992
       },
       {
-        "iName": "BrownSugar",
-        "iCup": 240,
-        "iSpoon": 15,
-        "iTeaspoon": 5
+        "iName": "Brown Sugar",
+        "iCup": 220,
+        "iSpoon": 13.75,
+        "iTeaspoon": 4.584
       },
       {
-        "iName": "SugarPowder",
-        "iCup": 120,
-        "iSpoon": 8,
-        "iTeaspoon": 3
+        "iName": "Sugar Powder",
+        "iCup": 130.1,
+        "iSpoon": 8.133,
+        "iTeaspoon": 2.711
       },
       {
-        "iName": "BakingPowder",
-        "iCup": -1,
-        "iSpoon": 10,
-        "iTeaspoon": 3
+        "iName": "Baking Powder",
+        "iCup": 179.8,
+        "iSpoon": 11.24,
+        "iTeaspoon": 3.746
       },
       {
-        "iName": "BakingSoda",
-        "iCup": -1,
-        "iSpoon": 10,
-        "iTeaspoon": 3
+        "iName": "Baking Soda",
+        "iCup": 205.8,
+        "iSpoon": 12.86,
+        "iTeaspoon": 4.288
       },
       {
         "iName": "Honey",
-        "iCup": 320,
-        "iSpoon": 20,
-        "iTeaspoon": 7
+        "iCup": 340.7,
+        "iSpoon": 21.29,
+        "iTeaspoon": 7.098
       },
       {
         "iName": "Butter",
-        "iCup": 240,
-        "iSpoon": 15,
-        "iTeaspoon": -1
+        "iCup": 229.5,
+        "iSpoon": 14.34,
+        "iTeaspoon": 4.781
       }
     ],
     "factors": [
@@ -81,7 +81,7 @@
   "ml": [
     {
       "iName": "All",
-      "iCup": 236.59,
+      "iCup": 236.6,
       "iSpoon": 14.79,
       "iTeaspoon": 4.93
     }

@@ -5,6 +5,10 @@
 //TODO update data in data files
 
 
+interface String {
+    startsWith(str: string): boolean;
+}
+
 
 //---------------- Listeners -----------------------------------
 $(document).on("ready", function () {
@@ -44,6 +48,9 @@ $(document).on("ready", function () {
     });//show result if user pressed enter at input
     //window.location = "index.html";
     //CN.getCountry();
+    $(function(){
+        $("#bMenu").enhanceWithin().popup();
+    });
 });
 $(document).on("pagecontainerbeforechange", function (event, ui) {
     CN.activePage = ui.toPage[0].id;
@@ -103,13 +110,14 @@ $(document).on("pagecontainershow", function (event, ui) {
 //--------------Const Var's & methods-----------------------------
 class CN {
     static dataReady: boolean = false;
-    static dataVersion = "V0.7.0 D27082016";
+    static dataVersion = "V0.7.0 D08092016";
     static activePage: string = "home"; // to store active page
     private static allIng; //initialize new array for ingredients
     static getAllIng() {
         return this.allIng;
     } //get private allAll
-    private static bConvertData = "data/dataUS.json"; //address for data file in use
+    private static bConvertData = "data/dataEU.json"; //address for data file in use
+    private static bTransition:string =  "slide";
 
     //private static query: string = "";
 
@@ -120,16 +128,22 @@ class CN {
     } // address builder for google maps
     private static userCountryLong: string = "";
     private static userCountryShort: string = "";
-    private static getAndroidLoactionP():void{
+    private static getAndroidLocationP(): void {
         try {
             console.log("request to android");
             Android.requestLocation();
+        } catch (e) {
+            console.log(e);
         }
-        finally {}
-    }
-
-    static getCountry(): void {
-        CN.getAndroidLoactionP();
+        finally {
+        }
+    }//display android location permeation request for marshmallow
+    static getCountry(fAndroid?:boolean): void {
+        console.log("getCountry Activated");
+        console.log("fAndroid: " + fAndroid + "");
+        if (fAndroid != true) { // if calling came from android then no need to request permissions again
+            CN.getAndroidLocationP();
+        }
         CN.oldMeasureSystem = CN.getMeasureSystem();
         function geoSuccess(pos: Position): void {
             $("#loading").popup("open");
@@ -153,7 +167,7 @@ class CN {
                         CN.getData();
                     }
                 })
-            }).fail(function() {
+            }).fail(function () {
                 CN.errorLoadingData();
             })
         } // if navigator geoLocation request success
@@ -161,8 +175,11 @@ class CN {
             console.log(error);
             try {
                 Android.showToast("Allow location and try again");
+            } catch (e) {
+                console.log(e);
             }
-            finally {}
+            finally {
+            }
             CN.errorLoadingData();
         } // if navigator geoLocation request error
         navigator.geolocation.getCurrentPosition(geoSuccess, geoError); // send the request
@@ -179,18 +196,19 @@ class CN {
                 case "UK":
                 case "AU":
                 case "CA":
+                case "EU":
                     CN.measureSystem = mSystem;
                     break;
                 case "":
                     break;
                 default:
-                    CN.measureSystem = "US";
+                    CN.measureSystem = "EU";
                     console.log(mSystem);
             }
             localStorage.setItem("bConverterMeasureSystem", CN.measureSystem);
         } else { // if prefered measure System didnt passed to the function
             CN.measureSystem = (localStorage.getItem("bConverterMeasureSystem")) ?
-                localStorage.getItem("bConverterMeasureSystem") : "US";
+                localStorage.getItem("bConverterMeasureSystem") : "EU";
             // check if measure system exist in local storage if not set default
             localStorage.setItem("bConverterMeasureSystem", CN.measureSystem); //update local storage
         }
@@ -215,7 +233,7 @@ class CN {
             obResponse.volume.ml[0].iTeaspoon);
         $("#settingMeasure").html(volume.print());
     } // change data in setting page base on measure system
-    static errorLoadingData():void{
+    static errorLoadingData(): void {
         console.log("error loading data ");
         CN.setMeasureSystem(CN.oldMeasureSystem);//go back to previous
         $("#errorMsg").html("Can't Load Data").fadeIn(1000).delay(3000).fadeOut(1000);//display error msg
@@ -224,7 +242,6 @@ class CN {
         CN.dataToSettingPage();
         CN.loadingOff();
     } // show msg if cant get data
-
     static dataToArray(className: string): void {
         var key = "bConverterData" + CN.measureSystem;
         var data: string = localStorage.getItem(key);
@@ -255,11 +272,12 @@ class CN {
                 }
                 break;
         }
-        CN.allIng.printIngArray();
+        //CN.allIng.printIngArray();
         CN.putDataInSelectList(className);// put ingredients names in the select list
         $.mobile.changePage(url, {
             dataUrl: "h",
-            showLoadMsg: false
+            showLoadMsg: false,
+            transition: CN.bTransition
         });// go to the page
     }//get json string, parse it, put in array, display to user
     static getData(className?: string): void {
@@ -278,6 +296,14 @@ class CN {
         var localstoregeVersion = localStorage.getItem("bConverterDataVersion");
         var page: string = CN.activePage;
         console.log(page);
+        if (localstoregeVersion != CN.dataVersion) {
+            for (var i = (localStorage.length); i >= 0; i--) {
+                var keyToDelete: String = String(localStorage.key(i));
+                if (keyToDelete.startsWith("bConverterData")) {
+                    localStorage.removeItem(keyToDelete + "");
+                }
+            }
+        }
         if (localStorage.getItem(key) && localstoregeVersion == CN.dataVersion) { //if there is local data get it
             tempResponse = localStorage.getItem(key); //get response
             if (CN.activePage == "pSetting") {
@@ -286,7 +312,7 @@ class CN {
             console.log("data from localstorage");
             CN.loadingOff();
             $("#pSystemMeasureBtn").html(CN.getMeasureSystem());
-        } else { //if there isn't local data get it from the server
+        } else { //if there isn't updated local data get it from the server
             CN.ingRequest.abort();
             CN.ingRequest.open("GET", CN.bConvertData, true);
             CN.ingRequest.onreadystatechange = function () {
@@ -329,16 +355,16 @@ class CN {
                 break;
         }
         var select: HTMLSelectElement = <HTMLSelectElement>document.getElementById(listId);
+        $(select).empty();
         select.length = 0;
         for (let i: number = 0; i < CN.allIng.getIngredients().length; i++) {
             let opt = document.createElement("option"); //create option
             opt.value = i.toString(); // put value in option
             opt.text = CN.allIng.getIngredients()[i].ingName(); // put text in option
-            if (i == 0) {
-                opt.setAttribute("selected", "true");
-            }
+            //if (i == 0) {opt.setAttribute("selected", "true");}
             select.appendChild(opt); //put option in the list
         }
+        $("#" + listId).selectmenu().selectmenu("refresh"); // refresh list to show the first ingridiante
         if (unitListId != "") {
             select = <HTMLSelectElement>document.getElementById(unitListId);
             select.length = 0;
@@ -346,13 +372,12 @@ class CN {
                 let opt = document.createElement("option"); //create option
                 opt.value = i.toString(); // put value in option
                 opt.text = CN.allIng.getFactors()[i].getName(); // put text in option
-                if (i == 0) {
-                    opt.setAttribute("selected", "true");
-                }
+                //if (i == 0) {opt.setAttribute("selected", "true");}
                 select.appendChild(opt); //put option in the list
             }
         }
-        //select.value = "0";
+        $("#" + unitListId).selectmenu().selectmenu('refresh');
+        //select.value = "1";
 
     } // method to put options in select ingredients html list
     static validateInputNum(element: HTMLInputElement): boolean {
@@ -384,12 +409,12 @@ class CN {
             return false;
         }
     }//validate user input and pass if validated
-    static loadingOff():void {
+    static loadingOff(): void {
         setTimeout(function () {
             $("#loading").popup("close");
         }, 1500)
     }
-    static clearResults():void{
+    static clearResults(): void {
         $("#gResult").hide();
         $("#mResult").hide();
         $("#tResult").hide();
@@ -397,11 +422,18 @@ class CN {
         $("#mMeasure").val("");
         $("#tDegree").val("");
     }
-
     static goToSetting() {
         $.mobile.changePage("#pSetting", {
             dataUrl: "h",
-            showLoadMsg: true
+            showLoadMsg: true,
+            transition: CN.bTransition
+        });// go to the page
+    } // go to setting page
+    static goToAbout() {
+        $.mobile.changePage("#pAbout", {
+            dataUrl: "h",
+            showLoadMsg: true,
+            transition: CN.bTransition
         });// go to the page
     } // go to setting page
     static convertTool(tool: string, result: number) {
@@ -420,7 +452,7 @@ interface Data {
         gram: DataIng[];
         factors: dataFactor[];
     }
-    volume:{
+    volume: {
         ml: DataIng[];
         factors: dataFactor[];
     }
@@ -432,7 +464,6 @@ interface DataIng {
     iSpoon: number;
     iTeaspoon: number;
 }
-
 
 
 //------------Classes-----------------------------------
@@ -513,6 +544,7 @@ class WeightIng extends Ing {
         return super.print() + " CupToGram:" + this.iCupTo + " SpoonToGram:" + this.iSpoonTo + " TeaspoonToGram:" + this.iTeaspoonTo;
     }
 
+
     //@Override
     convertResult(grams: number, tool: string, factor: number): number {
         let result: number;
@@ -547,7 +579,7 @@ class WeightIng extends Ing {
             /*$("#gResult").html("are you nuts?? " + measure + " " + measureName + " of " + CN.getAllIng().getIngredients()[ingNumber]                .ingName() + "??").show().css("display", "inline-block");*/
         } else {
             let toolToPrint = CN.convertTool(tool, result);
-            $("#gResult").html(measure + " " + measureName + " = " + result + " " + toolToPrint).show().css("display", "inline-block"); // display result
+            $("#gResult").html("<p class='ingName'>" + CN.getAllIng().getIngredients()[ingNumber].ingName() + "</p>" + measure + " " + measureName + " = " + result + " " + toolToPrint).show().css("display", "inline-block"); // display result
         }
     } // method to calculate convert result and show it to the user - for gram only
 } // class for gram convert ingredient
@@ -601,13 +633,13 @@ class VolumeIng extends Ing {
         let result = CN.getAllIng().getIngredients()[ingNumber].convertResult(measure, tool, factor);
         if (result < 0) { //check if there is data
             $("#mResult").html("Can't convert to " + tool).show().css("display", "inline-block");
-                /*.html("are you nuts?? " + measure + " " + measureName + " of " + CN.getAllIng().getIngredients()[ingNumber]                .ingName() + "??").show().css("display", "inline-block");*/
+            /*.html("are you nuts?? " + measure + " " + measureName + " of " + CN.getAllIng().getIngredients()[ingNumber]                .ingName() + "??").show().css("display", "inline-block");*/
         } else {
             let toolToPrint = CN.convertTool(tool, result);
             $("#mResult").html(measure + " " + measureName + " = " + result + " " + toolToPrint).show()
                 .css("display", "inline-block");// display result
             /*
-            $("#mResult").html(measure + " " + measureName + " = " + CN.getAllIng().getIngredients()                   [ingNumber]                 .convertResult(measure, tool) + " " + tool).show().css("display", "inline-block"); // display result*/
+             $("#mResult").html(measure + " " + measureName + " = " + CN.getAllIng().getIngredients()                   [ingNumber]                 .convertResult(measure, tool) + " " + tool).show().css("display", "inline-block"); // display result*/
         }
     } // method to calculate convert result and show it to the user - for ml only
 } // class for gram convert ingredient

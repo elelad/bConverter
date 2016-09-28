@@ -12,7 +12,8 @@ h2{
 
 /*----------class---------------- */
 .ui-page .ui-header{
-    background: linear-gradient(rgba(255,255,255,1), rgba(255,255,255,0.6));
+    background: linear-gradient(rgba(240,240,240,0.95), rgba(255,255,255,0.95), rgba(240,240,240,0.95));
+    /*rgba(255,255,255,1), rgba(255,255,255,0.6)*/
     border: none;
     /*color: white;*/
     text-shadow: none;
@@ -38,8 +39,9 @@ h2{
 }
 
 .dollBtn{
-    font-weight: 100;
+    font-weight: 400;
 }
+
 
 .measureIcon{
     /*background-image: url("../src/cup.png");
@@ -51,7 +53,7 @@ h2{
     background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.7));
     box-shadow: 4px 4px 6px rgba(0,0,0,0.8);
     border-radius: 10px;
-    padding: 20px;
+    padding: 10px 20px 10px 20px;
     display: inline-block;
     font-size: 1.5em;
     color: black;
@@ -59,12 +61,27 @@ h2{
     /*color: white;*/
 }
 
-.resultBtn{
-    background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+#gResultBtn, #mResultBtn, #tResultBtn{
+    background: linear-gradient(rgba(230,230,230,1), rgba(255,255,255,1), rgba(230,230,230,1));
     box-shadow: 4px 4px 6px rgba(0,0,0,0.9);
+    border-radius: 8px;
+}
+#gResultBtn:hover, #mResultBtn:hover, #tResultBtn:hover{
+    background: rgba(230,230,230,1);
+}
+#gResultBtn:active, #mResultBtn:active, #tResultBtn:active{
+    background: rgba(255,255,255,1);
+    box-shadow: 4px 4px 6px rgba(0,0,0,0.5);
+}
+
+.ingName{
+    margin-top: 0;
+    line-height: 0.7em;
+    font-size: 0.6em;
 }
 #home .navBtn{
-    background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.7)) ;
+    background: linear-gradient(rgba(230,230,230,0.95), rgba(255,255,255,0.95), rgba(230,230,230,0.95));
+    /*background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.7)) ;*/
     border: none;
     box-shadow: 4px 4px 6px rgba(0,0,0,0.9);
     border-radius: 15px;
@@ -168,6 +185,46 @@ input::-webkit-inner-spin-button {
     background-color: transparent;
     border-color: rgba(255,0,0,0.9);
 }
+
+#bMenu{
+    width: 150px;
+    line-height: 2em;
+}
+
+@media screen and (max-width: 400px){
+    select, span {
+        width:  100%;
+        max-width: 11em;
+    }
+}
+
+@media screen and (max-width: 380px){
+    select, span {
+        width:  100%;
+        max-width: 10em;
+    }
+}
+
+@media screen and (max-width: 350px){
+    select, span {
+        width:  100%;
+        max-width: 7em;
+    }
+}
+
+@media screen and  (max-width: 300px){
+    select, span {
+        width:  100%;
+        max-width: 4em;
+    }
+}
+@media screen and (max-width: 250px){
+    select, span {
+        width:  100%;
+        max-width: 1em;
+    }
+}
+
 
 #mIngList{
     display: none;

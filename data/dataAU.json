@@ -3,69 +3,69 @@
     "gram": [
       {
         "iName": "Flour",
-        "iCup": 140,
-        "iSpoon": 10,
-        "iTeaspoon": -1
+        "iCup": 150,
+        "iSpoon": 12,
+        "iTeaspoon": 3
       },
       {
         "iName": "Cocoa",
-        "iCup": 140,
-        "iSpoon": 10,
-        "iTeaspoon": -1
+        "iCup": 150,
+        "iSpoon": 12,
+        "iTeaspoon": 3
       },
       {
         "iName": "Cornflour",
-        "iCup": 140,
-        "iSpoon": 10,
-        "iTeaspoon": -1
+        "iCup": 150,
+        "iSpoon": 12,
+        "iTeaspoon": 3
       },
       {
         "iName": "Salt",
-        "iCup": -1,
-        "iSpoon": 15,
+        "iCup": 250,
+        "iSpoon": 20,
         "iTeaspoon": 5
       },
       {
-        "iName": "WhiteSugar",
+        "iName": "White Sugar",
+        "iCup": 225,
+        "iSpoon": 18,
+        "iTeaspoon": 4.5
+      },
+      {
+        "iName": "Brown Sugar",
         "iCup": 200,
-        "iSpoon": 12,
+        "iSpoon": 16,
         "iTeaspoon": 4
       },
       {
-        "iName": "BrownSugar",
-        "iCup": 240,
-        "iSpoon": 15,
-        "iTeaspoon": 5
-      },
-      {
         "iName": "SugarPowder",
-        "iCup": 120,
-        "iSpoon": 8,
+        "iCup": 150,
+        "iSpoon": 12,
         "iTeaspoon": 3
       },
       {
         "iName": "BakingPowder",
-        "iCup": -1,
-        "iSpoon": 10,
+        "iCup": 150,
+        "iSpoon": 12,
         "iTeaspoon": 3
       },
       {
         "iName": "BakingSoda",
-        "iCup": -1,
-        "iSpoon": 10,
+        "iCup": 150,
+        "iSpoon": 12,
         "iTeaspoon": 3
       },
       {
-        "iName": "Honey",
-        "iCup": 320,
-        "iSpoon": 20,
+        "iName": "Honey!",
+        "iCup": 350,
+        "iSpoon": 28,
         "iTeaspoon": 7
       },
       {
-        "iName": "Butter",
-        "iCup": 240,
-        "iSpoon": 15,
-        "iTeaspoon": -1
+        "iName": "Butter!",
+        "iCup": 250,
+        "iSpoon": 20,
+        "iTeaspoon": 5
       }
     ],
     "factors": [

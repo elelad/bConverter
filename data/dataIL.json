@@ -5,19 +5,19 @@
         "iName": "Flour",
         "iCup": 140,
         "iSpoon": 10,
-        "iTeaspoon": -1
+        "iTeaspoon": 3
       },
       {
         "iName": "Cocoa",
         "iCup": 140,
         "iSpoon": 10,
-        "iTeaspoon": -1
+        "iTeaspoon": 3
       },
       {
         "iName": "Cornflour",
         "iCup": 140,
         "iSpoon": 10,
-        "iTeaspoon": -1
+        "iTeaspoon": 3
       },
       {
         "iName": "Salt",
@@ -26,32 +26,32 @@
         "iTeaspoon": 5
       },
       {
-        "iName": "WhiteSugar",
+        "iName": "White Sugar",
         "iCup": 200,
         "iSpoon": 12,
         "iTeaspoon": 4
       },
       {
-        "iName": "BrownSugar",
+        "iName": "Brown Sugar",
         "iCup": 240,
         "iSpoon": 15,
         "iTeaspoon": 5
       },
       {
-        "iName": "SugarPowder",
+        "iName": "Sugar Powder",
         "iCup": 120,
         "iSpoon": 8,
         "iTeaspoon": 3
       },
       {
-        "iName": "BakingPowder",
-        "iCup": -1,
+        "iName": "Baking Powder",
+        "iCup": 140,
         "iSpoon": 10,
         "iTeaspoon": 3
       },
       {
-        "iName": "BakingSoda",
-        "iCup": -1,
+        "iName": "Baking Soda",
+        "iCup": 140,
         "iSpoon": 10,
         "iTeaspoon": 3
       },

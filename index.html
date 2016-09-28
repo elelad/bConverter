@@ -27,14 +27,15 @@
 
 
 <!--________home page___________________-->
-<div data-role="page" id="home" data-dom-cache="false">
+<div data-role="page" id="home" data-transition="slide" data-dom-cache="false">
     <div data-role="header">
+        <a href="#bMenu" data-rel="popup" class="ui-btn ui-btn-corner-all  ui-icon-bars ui-btn-icon-notext
+            ui-nodisc-icon ui-btn-b">Menu</a>
         <h1>Baking Converter</h1>
-        <p></p>
         <div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
             <a id="#pSystemMeasureBtn" class="ui-btn dollBtn pSystemMeasureBtn"></a>
-            <a id="#pSettingBtn" onclick="CN.goToSetting()" class="ui-btn ui-icon-gear ui-btn-icon-notext
-            ui-nodisc-icon ui-btn-b">setting</a>
+            <!--<a id="#pSettingBtn" onclick="CN.goToSetting()" class="ui-btn ui-icon-gear ui-btn-icon-notext
+            ui-nodisc-icon ui-btn-b">setting</a>-->
         </div>
     </div>
     <div data-role="content">
@@ -51,9 +52,11 @@
 
         <div id="credit">
             <div>Icons made by <a href="http://www.freepik.com" title="Freepik" target="_blank">Freepik</a> from <a
-                    href="http://www.flaticon.com" title="Flaticon" target="_blank">www.flaticon.com</a> is licensed by <a
-                    href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC
-                3.0 BY</a></div>
+                    href="http://www.flaticon.com" title="Flaticon" target="_blank">www.flaticon.com</a> is licensed by
+                <a
+                        href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0"
+                        target="_blank">CC
+                    3.0 BY</a></div>
         </div>
     </div>
 
@@ -63,10 +66,12 @@
         <div data-role="header" data-theme="a">
             <h1>Location</h1>
         </div>
-        <div data-role="content" class="ui-content" >
+        <div data-role="content" class="ui-content">
             <h3>Set Measure system based on your location?</h3>
-            <a id="locationYesBtn" class="ui-btn ui-icon-check ui-btn-icon-left ui-btn-corner-all ui-btn-a ui-btn-inline ">Yes</a>
-            <a id="locationNoBtn" class="ui-btn ui-icon-delete ui-btn-icon-right ui-btn-corner-all ui-btn-a ui-btn-inline ">No</a>
+            <a id="locationYesBtn"
+               class="ui-btn ui-icon-check ui-btn-icon-left ui-btn-corner-all ui-btn-a ui-btn-inline ">Yes</a>
+            <a id="locationNoBtn"
+               class="ui-btn ui-icon-delete ui-btn-icon-right ui-btn-corner-all ui-btn-a ui-btn-inline ">No</a>
         </div>
     </div>
 
@@ -77,18 +82,20 @@
 <div data-role="page" id="pWeight" data-dom-cache="false">
     <div data-role="header">
         <h1>Weight</h1>
-        <a href="#home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-btn-corner-all ui-nodisc-icon ui-btn-b"></a>
+        <a href="#bMenu" data-rel="popup" class="ui-btn ui-btn-corner-all  ui-icon-bars ui-btn-icon-notext
+            ui-nodisc-icon ui-btn-b">Menu</a>
+        <!--<a href="#home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-btn-corner-all ui-nodisc-icon ui-btn-b"></a>-->
         <div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
             <a class="ui-btn dollBtn pSystemMeasureBtn"></a>
-            <a onclick="CN.goToSetting()" class="ui-btn ui-icon-gear ui-btn-icon-notext
-            ui-nodisc-icon ui-btn-b">setting</a>
+            <!--<a onclick="CN.goToSetting()" class="ui-btn ui-icon-gear ui-btn-icon-notext
+            ui-nodisc-icon ui-btn-b">setting</a>-->
         </div>
     </div>
 
     <div data-role="content">
         <h2>Convert Weight to Cup, Spoon, Teaspoon</h2>
         <!-- -------Ingredient----------- -->
-        <div data-role="controlgroup" data-type="horizontal">
+        <div data-role="controlgroup" data-type="horizontal" id="gIngControlgroup">
             <button class="dollBtn" onclick="$(this).blur()">Convert</button>
             `<select name="gIngList" id="gIngList" data-inline="true"
                      data-wrapper-class="controlgroup-textinput ui-btn">
@@ -117,8 +124,8 @@
             </select><br><br>
         </div>
         <!-- -------Submit----------- -->
-        <button type="submit" onclick="CN.validateInputNum(document.getElementById('gMeasure'))"
-                class="ui-btn ui-btn-inline ui-btn-corner-all ui-overlay-shadow resultBtn" tabindex="2">
+        <button onclick="CN.validateInputNum(document.getElementById('gMeasure'))" id="gResultBtn"
+                class="ui-btn ui-btn-inline ui-btn-corner-all" tabindex="2">
             Convert!
         </button>  <!--WeightIng.gramResultToScreen()-->
         <br>
@@ -130,12 +137,14 @@
 <!--________volume page___________________-->
 <div data-role="page" id="pVolume" data-dom-cache="false">
     <div data-role="header">
+        <a href="#bMenu" data-rel="popup" class="ui-btn ui-btn-corner-all  ui-icon-bars ui-btn-icon-notext
+            ui-nodisc-icon ui-btn-b">Menu</a>
         <h1>Volume</h1>
-        <a href="#home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-btn-corner-all  ui-nodisc-icon ui-btn-b"></a>
+        <!--<a href="#home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-btn-corner-all  ui-nodisc-icon ui-btn-b"></a>-->
         <div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
             <a class="ui-btn dollBtn pSystemMeasureBtn"></a>
-            <a onclick="CN.goToSetting()" class="ui-btn ui-icon-gear ui-btn-icon-notext
-            ui-nodisc-icon ui-btn-b">setting</a>
+            <!--<a onclick="CN.goToSetting()" class="ui-btn ui-icon-gear ui-btn-icon-notext
+            ui-nodisc-icon ui-btn-b">setting</a>-->
         </div>
     </div>
     <div data-role="content">
@@ -146,7 +155,8 @@
         <!-- -------From----------- -->
         <div data-role="controlgroup" data-type="horizontal">
             <button class="dollBtn">From</button>
-            <input type="number" id="mMeasure" data-wrapper-class="controlgroup-textinput ui-btn" pattern="[0-9]" tabindex="1">
+            <input type="number" id="mMeasure" data-wrapper-class="controlgroup-textinput ui-btn" pattern="[0-9]"
+                   tabindex="1">
             <label for="mMeasure" id="mMeasureLabel">ml</label>
             <select name="mUnitList" id="mUnitList" data-inline="true"
                     data-wrapper-class="controlgroup-textinput ui-btn">
@@ -164,7 +174,7 @@
             </select>
         </div>
         <!-- -------Submit----------- -->
-        <button type="submit" onclick="CN.validateInputNum(document.getElementById('mMeasure'))"
+        <button type="submit" onclick="CN.validateInputNum(document.getElementById('mMeasure'))" id="mResultBtn"
                 class="ui-btn ui-btn-inline ui-btn-corner-all ui-overlay-shadow" tabindex="2">Convert!
         </button> <!--VolumeIng.mlResultToScreen()-->
         <br>
@@ -178,11 +188,13 @@
 <div data-role="page" id="pTemperature" data-dom-cache="false">
     <div data-role="header">
         <h1>Temperature</h1>
-        <a href="#home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-btn-corner-all  ui-nodisc-icon ui-btn-b"></a>
+        <a href="#bMenu" data-rel="popup" class="ui-btn ui-btn-corner-all  ui-icon-bars ui-btn-icon-notext
+            ui-nodisc-icon ui-btn-b">Menu</a>
+        <!--<a href="#home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-btn-corner-all  ui-nodisc-icon ui-btn-b"></a>-->
         <div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
             <a class="ui-btn dollBtn pSystemMeasureBtn"></a>
-            <a onclick="CN.goToSetting()" class="ui-btn ui-icon-gear ui-btn-icon-notext
-            ui-nodisc-icon ui-btn-b">setting</a>
+            <!--<a onclick="CN.goToSetting()" class="ui-btn ui-icon-gear ui-btn-icon-notext
+            ui-nodisc-icon ui-btn-b">setting</a>-->
         </div>
     </div>
     <div data-role="content">
@@ -190,7 +202,8 @@
         <!-- -------From----------- -->
         <div data-role="controlgroup" data-type="horizontal">
             <button class="dollBtn">From</button>
-            <input type="number" id="tDegree" data-wrapper-class="controlgroup-textinput ui-btn" pattern="[0-9]" tabindex="1">
+            <input type="number" id="tDegree" data-wrapper-class="controlgroup-textinput ui-btn" pattern="[0-9]"
+                   tabindex="1">
             <label for="tDegree" id="degreeLabel">&#176 </label>
             <button id="tDegreeSign" class="dollBtn">&#176</button>
             <select name="ingList" id="tIngList" onchange="Temperature.toggleCeFa()"
@@ -201,7 +214,7 @@
             <button class="dollBtn">To <span id="tTo">Celsius</span></button>
         </div>
         <!-- -------Submit----------- -->
-        <button type="submit" onclick="CN.validateInputNum(document.getElementById('tDegree'))"
+        <button type="submit" onclick="CN.validateInputNum(document.getElementById('tDegree'))" id="tResultBtn"
                 class="ui-btn ui-btn-inline ui-btn-corner-all ui-overlay-shadow" tabindex="2">
             Convert!
         </button> <!--Temperature.temperatureResultToScreen()-->
@@ -213,14 +226,16 @@
 </div>
 
 <!--________setting page___________________-->
-<div data-role="page" id="pSetting" data-dom-cache="false">
+<div data-role="page" id="pSetting" data-transition="slide" data-dom-cache="false">
     <div data-role="header">
         <h1>Setting</h1>
-        <a href="#home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-btn-corner-all ui-nodisc-icon ui-btn-b"></a>
+        <a href="#bMenu" data-rel="popup" class="ui-btn ui-btn-corner-all  ui-icon-bars ui-btn-icon-notext
+            ui-nodisc-icon ui-btn-b">Menu</a>
+        <!--<a href="#home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-btn-corner-all ui-nodisc-icon ui-btn-b"></a>-->
         <div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
             <a class="ui-btn dollBtn pSystemMeasureBtn"></a>
-            <a onclick="CN.goToSetting()" class="ui-btn ui-icon-gear ui-btn-icon-notext
-            ui-nodisc-icon ui-btn-b">setting</a>
+            <!--<a onclick="CN.goToSetting()" class="ui-btn ui-icon-gear ui-btn-icon-notext
+            ui-nodisc-icon ui-btn-b">setting</a>-->
         </div>
     </div>
 
@@ -232,9 +247,9 @@
         <fieldset data-role="controlgroup" data-type="horizontal" id="systemFildset">
             <input type="radio" value="US" name="mSystem" id="rUS"/><label for="rUS">US</label>
             <input type="radio" value="IL" name="mSystem" id="rIL"/><label for="rIL">IL</label>
-            <input type="radio" value="CA" name="mSystem" id="rCA"/><label for="rCA">CA</label>
+            <!--<input type="radio" value="CA" name="mSystem" id="rCA"/><label for="rCA">CA</label>-->
             <input type="radio" value="AU" name="mSystem" id="rAU"/><label for="rAU">AU</label>
-            <input type="radio" value="UK" name="mSystem" id="rUK"/><label for="rUK">UK</label>
+            <input type="radio" value="EU" name="mSystem" id="rEU"/><label for="rEU">EU</label>
         </fieldset>
 
         <h3 id="settingMeasure"></h3>
@@ -243,8 +258,60 @@
 
 </div>
 
+<!--________about page___________________-->
+<div data-role="page" id="pAbout" data-transition="slide" data-dom-cache="false">
+    <div data-role="header">
+        <h1>About</h1>
+        <a href="#bMenu" data-rel="popup" class="ui-btn ui-btn-corner-all  ui-icon-bars ui-btn-icon-notext
+            ui-nodisc-icon ui-btn-b">Menu</a>
+        <!--<a href="#home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-btn-corner-all ui-nodisc-icon ui-btn-b"></a>-->
+        <div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
+            <a class="ui-btn dollBtn pSystemMeasureBtn"></a>
+            <!--<a onclick="CN.goToSetting()" class="ui-btn ui-icon-gear ui-btn-icon-notext
+            ui-nodisc-icon ui-btn-b">setting</a>-->
+        </div>
+    </div>
+
+    <div data-role="content">
+        <h2>Made by</h2>
+
+        <h2>Credit</h2>
+
+        <h2>Data</h2>
+
+        <h2>Privacy</h2>
 
 
+
+    </div>
+
+</div>
+
+
+<!--__________menu__________________________-->
+<div id="bMenu" data-theme="b" data-transition="fade" data-corners="false">
+    <ul data-role="listview">
+        <!--<li data-role="list-divider" data-theme="a"></li>-->
+        <li><a href="#home" class="ui-btn ui-icon-home ui-btn-icon-left ui-nodisc-icon ui-btn-b" data-transition="slide">Home</a></li>
+        <li><a onclick="CN.goToSetting()" class="ui-btn ui-icon-gear ui-btn-icon-left
+            ui-nodisc-icon ui-btn-b">Setting</a></li>
+        <li><a onclick="CN.goToAbout()" class="ui-btn ui-icon-info ui-btn-icon-left ui-nodisc-icon ui-btn-b"
+               data-transition="slide">About</a></li>
+        <!--<li data-role="list-divider" data-theme="a" data-corners="false" data-mini="true"></li>-->
+        <!--<span data-role="collapsible" data-theme="b" data-inset="true" data-corners="false"
+              data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+            <h4>Convert</h4>
+            <ul data-role="listview">
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+            </ul>
+        </span>
+        <li data-role="list-divider" data-theme="a"></li>-->
+        <!--<li><a href="#other-page">Other Page</a></li>
+        <li><a href="#third-page">Third Page</a></li>-->
+    </ul>
+</div>
 
 
 </body>

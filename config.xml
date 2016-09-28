@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0"
+        id="com.elelad.bconverter" versionCode="1" version="1.0.0">
+    <name>bConverter</name>
+    <description>Hello World sample application that responds to the deviceready event.</description>
+    <author href="" email="elelad.dev@gmail.com">Elad Elram</author>
+    <content src="index.html"/>
+    <platform name="android"/>
+    <preference name="Fullscreen" value="true" />
+    <preference name="permissions" value="INTERNET" />
+    <access origin="*"/>
+    <allow-intent href="http://*/*"/>
+    <allow-intent href="https://*/*"/>
+    <icon src="src/bConverterLogo.png" />
+</widget>
